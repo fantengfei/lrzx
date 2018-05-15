@@ -10,7 +10,7 @@ from flask import render_template
 from app import query
 
 app = Flask(__name__)
-app.debug = True
+app.debug = False
 
 @app.route('/')
 @app.route('/home')

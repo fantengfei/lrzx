@@ -116,7 +116,7 @@ def auto_script():
     s_sohu.news()
     s_yidianzixun.news()
 
-    # Timer(60, auto_script, ()).start()
+    Timer(60 * 60 + 6, auto_script, ()).start()
 
 
 def test():
