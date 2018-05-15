@@ -1,0 +1,21 @@
+{%- set page = 'beiyun' %}
+{%- extends "wrapper.html" %}
+{% block body %}
+
+    <div class="container container-wrapper">
+        <div class="col-md-7 content-layout" id="news-container">
+            {%- include 'newsFactory.html' %}
+        </div>
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-4">
+            {%- import 'macro.html' as card %}
+            {{ card.hot_list(hots) }}
+        </div>
+    </div>
+    <script src={{ url_for('static', filename='js/index.js') }} type='text/javascript'></script>
+{% endblock %}
+
+
+

@@ -1,0 +1,126 @@
+{%- set webtitle = '丽人资讯'  %}
+{% macro cell(news) -%}
+    <div class="item-layout">
+        <a class="item-layout-a" target="_blank" href={{ 'detail/' + news.target +'/'+ news.news_id }}>
+            {%- if news.imgs|length == 1 %}
+                <div class="img-layout"><img src={{ news.imgs[0] }} /></div>
+            {%- endif -%}
+
+            <div class="item-right-layout">
+                <div class="btn-link title-p-layout">{{ news.title }}</div>
+                {%- if news.imgs|length >= 3 -%}
+                    {{ multi_img(news.imgs) }}
+                {%- endif -%}
+                <div class="item-sub-layout {% if news.imgs|length != 1 %}  item-sub-one-layout {% endif %}">
+                    {{ sub_info(news.read_count, news.source_name, news.author, news.source_ico) }}
+                </div>
+            </div>
+        </a>
+        <div class="separate-div"></div>
+    </div>
+{%- endmacro  %}
+
+{% macro sub_info(count, name, author, ico) -%}
+    <span class="sub-p-layout">
+        {%- if ico != ''  %}
+            <img class="img-circle ico-img" src={{ ico }} />
+        {%- endif -%}
+
+        {%- if author != '' %}
+            {{ author }}
+        {%- else %}
+            {{ name }}
+        {%- endif -%}
+
+        {%- if count != 0 -%}
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ count }} 热度
+        {%- endif -%}
+    </span>
+{%- endmacro -%}
+
+{%- macro multi_img(imgs) -%}
+    <div class="img-multi-layout">
+        {%- for img in imgs -%}
+            <div><img src={{ img }}></div>
+        {%- endfor -%}
+    </div>
+{%- endmacro -%}
+
+
+
+{#热门排行#}
+{#========================================================#}
+
+{%- macro hot_list(hots)  %}
+    <div class="right-list">
+        <span class="card-title-span">热门排行</span>
+        <div class="card-content-div">
+            {% for item in hots %}
+                <a class="card-a-name" target="_blank" href={{ 'detail/' + item.target +'/'+ item.news_id }}>
+                    <i class="iconfont hot-i-layout order-i-{{ item.order }} {%- if item.order == 1 %} icon-icon-test2 {%- endif -%} {%- if item.order == 2 %} icon-2 {%- endif -%} {%- if item.order == 3 %} icon-icon-test {%- endif -%} {%- if item.order == 4 %} icon-icon-test4 {%- endif -%} {%- if item.order == 5 %} icon-icon-test3 {%- endif -%}"></i>
+                    {{ item.title }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{%- endmacro  %}
+
+
+
+
+{# 导航栏#}
+{#==========================================================#}
+
+{%- macro pc_nav(page) %}
+<div class="pc-header">
+    {%- if page != 'detail' %}
+        <div class="container header-layout-wrapper">
+            <div class="col-md-7 header-layout">
+                <a class="header-logo web-font" href="/">{{ webtitle }}</a>
+                <div class="search-box">
+                    <input placeholder="搜索你感兴趣的知识..." id="search-keyword" />
+                </div>
+                <button class="btn-search" onclick="onTapSearchBtn()">搜 索</button>
+            </div>
+        </div>
+    {%- endif -%}
+
+    <div class="nav-layout {%- if page == 'detail' %} navbar-fixed-top {%- endif %}">
+        <div class="container nav-layout-wrapper">
+            {{ nav_item(True, page) }}
+        </div>
+    </div>
+</div>
+{%- endmacro  -%}
+
+{%- macro mobile_nav(page) -%}
+{%- if page != 'detail' %}
+    <div class="mobile-header navbar-fixed-top">
+        <div class="mobile-header-wrapper">
+            <a class="mobile-logo-a web-font" href="/">{{ webtitle }}</a>
+            <input type="text" class="mobile-search-input" placeholder="搜索你感兴趣的知识..." maxlength="50"/>
+            <i class="iconfont icon-icon-serch search-icon"></i>
+{#            <a class="icon-jiahao1 mobile-btn-search iconfont" href="javascript:onTapHomeBtn()"></a>#}
+        </div>
+        <div class="container mobile-nav-layout-wrapper">
+            {{ nav_item(False, page) }}
+        </div>
+    </div>
+    <div class="mobile-mark-div"></div>
+{%- endif -%}
+{%- endmacro -%}
+
+
+{%- macro nav_item(ispc, page) -%}
+    {%- if ispc==False %}
+        {%- set item_prefix = "mobile-" %}
+    {%- else %}
+        {%- set item_prefix = "" %}
+    {%- endif -%}
+    <a href="/" class="{{ item_prefix }}a-item {% if page == '/' %} {{ item_prefix }}active {%- endif -%}">推荐</a>
+    <a href="/dayima" class="{{ item_prefix }}a-item {% if page == 'dayima' %} {{ item_prefix }}active {%- endif %}">大姨妈</a>
+    <a href="/education" class="{{ item_prefix }}a-item {% if page == 'education' %} {{ item_prefix }}active {%- endif %}">育儿</a>
+    <a href="/beiyun" class="{{ item_prefix }}a-item {% if page == 'beiyun' %} {{ item_prefix }}active {%- endif %}">备孕</a>
+    <a href="/meizhuang" class="{{ item_prefix }}a-item {% if page == 'meizhuang' %} {{ item_prefix }}active {%- endif %}">美妆</a>
+    <a href="/health" class="{{ item_prefix }}a-item {% if page == 'health' %} {{ item_prefix }}active {%- endif %}">健康</a>
+{%- endmacro -%}

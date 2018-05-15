@@ -1,0 +1,26 @@
+{%- set title = info.title %}
+{%- set page = 'detail' %}
+
+{%- extends "wrapper.html" %}
+{% block body %}
+    <div class="news-container container">
+        <div class="col-md-7">
+            <h2>{{ info.title }}</h2>
+            <div>
+                {%- if info.source != '' %}
+                    <span class="doc-source">来源：{{ info.source }} &nbsp;&nbsp;&nbsp;&nbsp;{{info.time}} </span>
+                {%- endif %}
+            </div>
+            <div class="content-db">
+                {{ info.content|safe }}
+            </div>
+        </div>
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-4">
+            {%- import 'macro.html' as card %}
+            {{ card.hot_list(hots) }}
+        </div>
+    </div>
+{% endblock %}

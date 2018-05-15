@@ -1,0 +1,97 @@
+# -*- coding: utf-8 -*-
+"""
+    index
+    ~~~~~~
+    :copyright: (c) 2018 by Taffy.
+"""
+
+from flask import Flask, request, redirect
+from flask import render_template
+from app import query
+
+app = Flask(__name__)
+app.debug = True
+
+@app.route('/')
+@app.route('/home')
+def index():
+    return render_template('index.html', list = query.newslist( type = 6, PC = __ISPC()), hots = query.hotList(type=6))
+
+@app.route('/dayima')
+def dayima():
+    return render_template('dayima.html', list=query.newslist(type = 1, PC=__ISPC()), hots=query.hotList(type=1))
+
+@app.route('/education')
+def education():
+    return render_template('education.html', list=query.newslist(type=2, PC=__ISPC()), hots=query.hotList(type=2))
+
+@app.route('/beiyun')
+def beiyun():
+    return render_template('beiyun.html', list=query.newslist(type=3, PC=__ISPC()), hots=query.hotList(type=3))
+
+@app.route('/meizhuang')
+def meizhuang():
+    return render_template('meizhuang.html', list=query.newslist(type=4, PC=__ISPC()), hots=query.hotList(type=4))
+
+@app.route('/health')
+def health():
+    return render_template('health.html', list=query.newslist(type=5, PC=__ISPC()), hots=query.hotList(type=5))
+
+
+@app.route('/load_more/<int:type>/<int:offset>')
+@app.route('/load_more/<int:offset>/<string:keyword>')
+def load_more(offset = 0, keyword = None, type = 1):
+    if keyword != None:
+        news = query.search(keyword, offset, PC = __ISPC())
+    else:
+        news = query.newslist(offset, type=type, PC = __ISPC())
+
+    if len(news) == 0:
+        return ''
+
+    return render_template('newsFactory.html', list = news)
+
+
+@app.route('/detail/<string:target>/<string:id>')
+@app.route('/search/detail/<string:target>/<string:id>')
+def detail(target, id):
+    path = request.path
+    if path.find('/search/detail/') == 0:
+        return redirect(path[8:])
+
+    return render_template('detail.html', info = query.detail(target, id), hots = query.hotList())
+
+
+@app.route('/search/<string:keyword>')
+def search(keyword):
+    list = query.search(keyword, PC = __ISPC())
+    return render_template('search.html', list = list, hots = query.hotList())
+
+
+@app.route('/autoscript')
+def autoscript():
+    query.auto_script()
+    return '<center><h1>success!!</h1></center>'
+
+
+@app.route('/test')
+def test():
+    return query.test()
+
+
+
+def __ISPC():
+    header = request.headers
+    devices = ("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod")
+    flag = True
+    print header
+    for device in devices:
+        if header['User-Agent'].find(device) >= 0:
+            flag = False
+            break
+
+    return flag
+
+
+if __name__ == '__main__':
+    app.run(debug = True)
