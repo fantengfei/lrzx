@@ -54,6 +54,7 @@ def insert(url, type, cookie):
         sourceName = u'一点资讯'
         author = news['source']
 
+        ico = ''
         if news.has_key('wemedia_info') and news['wemedia_info'].has_key('image'):
             ico = news['wemedia_info']['image']
 
