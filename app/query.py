@@ -25,7 +25,7 @@ def newslist(offset = 0, count = 10, type = 1, PC = True):
     random.shuffle(list)
     return list
 
-def hotList(max = 5, type = 1):
+def hotList(max = 5, type = 6):
     if type != 6:
         re = query_db('select * from news where type = ? order by read_count desc limit ? offset 0', [type, max], one=False)
     else:

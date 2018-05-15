@@ -53,12 +53,7 @@ def load_more(offset = 0, keyword = None, type = 1):
 
 
 @app.route('/detail/<string:target>/<string:id>')
-@app.route('/search/detail/<string:target>/<string:id>')
 def detail(target, id):
-    path = request.path
-    if path.find('/search/detail/') == 0:
-        return redirect(path[8:])
-
     return render_template('detail.html', info = query.detail(target, id), hots = query.hotList())
 
 

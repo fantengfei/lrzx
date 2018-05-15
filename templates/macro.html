@@ -1,7 +1,7 @@
 {%- set webtitle = '丽人资讯'  %}
 {% macro cell(news) -%}
     <div class="item-layout">
-        <a class="item-layout-a" target="_blank" href={{ 'detail/' + news.target +'/'+ news.news_id }}>
+        <a class="item-layout-a" target="_blank" href={{ url_for('detail', target=news.target, id=news.news_id) }}>
             {%- if news.imgs|length == 1 %}
                 <div class="img-layout"><img src={{ news.imgs[0] }} /></div>
             {%- endif -%}
@@ -56,7 +56,7 @@
         <span class="card-title-span">热门排行</span>
         <div class="card-content-div">
             {% for item in hots %}
-                <a class="card-a-name" target="_blank" href={{ 'detail/' + item.target +'/'+ item.news_id }}>
+                <a class="card-a-name" target="_blank" href={{ url_for('detail', target=item.target, id=item.news_id) }}>
                     <i class="iconfont hot-i-layout order-i-{{ item.order }} {%- if item.order == 1 %} icon-icon-test2 {%- endif -%} {%- if item.order == 2 %} icon-2 {%- endif -%} {%- if item.order == 3 %} icon-icon-test {%- endif -%} {%- if item.order == 4 %} icon-icon-test4 {%- endif -%} {%- if item.order == 5 %} icon-icon-test3 {%- endif -%}"></i>
                     {{ item.title }}
                 </a>
