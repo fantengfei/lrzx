@@ -48,6 +48,9 @@ def detail(id):
     soup = BeautifulSoup(content)
     info = soup.find('div', class_ = 'text')
 
+    if info == None:
+        return script.error()
+
     headerTag = info.find('div', class_ = 'text-title')
 
     titles = headerTag.find('h1').stripped_strings

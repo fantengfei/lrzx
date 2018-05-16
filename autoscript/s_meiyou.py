@@ -88,6 +88,9 @@ def detail(id):
     soup = BeautifulSoup(content)
     info = soup.find('div', class_ = 'warp')
 
+    if info == None:
+        return script.error()
+
     warp_title = info.find('div', class_ = 'warp-title')
     news_content = info.find('div', class_ = 'news-content')
     news_content = unicode(news_content).replace("<br/>", "")

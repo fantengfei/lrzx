@@ -40,5 +40,5 @@ def capture(url, headers = None):
 
 
 def error():
-    return {'title': '', 'time': '', 'source': '', 'content': u'<center>出错了！文章没有找到哦~</center>'}
+    return {'title': '', 'time': '', 'source': '', 'content': u'<center>出错了！文章可能被下架了哦~</center>'}
 
