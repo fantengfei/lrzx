@@ -5,7 +5,7 @@
 body {
     background-color: #ffffff;-webkit-font-smoothing: antialiased;
     overflow-x: hidden;}
-a, a:focus, a:hover, input, input:focus, button {
+a, a:focus, a:hover, input, input:focus, button, a:active {
     outline: none;
     text-decoration: none;
 }
@@ -287,4 +287,40 @@ video {
 }
 .mobile-active {
     font-weight: 700; color: #da3838;
+}
+
+
+
+
+/*手机引导*/
+.bottom-guide-wrapper {
+    visibility: hidden;
+    display: block;
+    background: #fff;
+    padding: 9px 0 5px 15px;
+    color: #101010;
+    filter:alpha(Opacity=94);-moz-opacity:0.94;opacity: 0.94;
+}
+.left-wrapper-div {
+    float: left; width: 68%; overflow: hidden;
+}
+.left-wrapper-div div {
+    font-size: 0.19rem;
+    line-height: 0.19rem;
+}
+.left-wrapper-div span {
+    font-size: 0.14rem;
+    line-height: 0.14rem;
+}
+.right-btn-span {
+    float: right;
+    background: #ff5b5f;
+    color: #fff;
+    border: 1px solid #ff5b5f;
+    display: inline-block;
+    border-radius: 3px;
+    margin: 5px 15px 0 0;
+    font-size: .12rem;
+    padding: 5px;
+
 }

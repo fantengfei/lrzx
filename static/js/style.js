@@ -7,14 +7,7 @@ $(document).ready(function () {
     var pixels = (deviceWidth / 4.5) + "px"
 
     var css = {
-        'font-size': pixels,
-        'height': pixels,
-        'max-height': pixels,
-        'min-height': pixels,
-        'line-height': pixels,
-        'width': '100%',
-        'max-width': '100%',
-        'min-width': '100%'
+        'font-size': pixels
     }
 
     $("#wrapper-html").css(css)
