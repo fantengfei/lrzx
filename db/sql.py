@@ -22,7 +22,6 @@ class Database(object):
     def execute(self, sql):
         if sql == None:
             return
-        print sql
 
         try:
             self.__cursor.execute(sql)
