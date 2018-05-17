@@ -59,8 +59,9 @@ def insert(url, type, cookie):
             ico = news['wemedia_info']['image']
 
         imgs = []
-        for img in news['image_urls']:
-            imgs.append('https://i1.go2yd.com/image.php?type=thumbnail_336x216&url=' + img)
+        if news.has_key('image_urls') == True:
+            for img in news['image_urls']:
+                imgs.append('https://i1.go2yd.com/image.php?type=thumbnail_336x216&url=' + img)
 
         if title == None or news_id == None:
             continue
