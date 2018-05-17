@@ -50,7 +50,8 @@ def insert(url, type, cookie):
         if news.has_key('content_type') != True or news['content_type'] != 'news':
             continue
         news_id = news['itemid']
-        title = news['title']
+        title = news['title'].replace("\n", "")
+        title = title.strip()
         sourceName = u'一点资讯'
         author = news['source']
 

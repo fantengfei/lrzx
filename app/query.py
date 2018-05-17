@@ -9,15 +9,17 @@ from autoscript import  s_meiyou
 from autoscript import  s_dayima
 from autoscript import  s_yidianzixun
 from autoscript import  s_sohu
-from db.sql import query_db
+from db.sql import Database
 import random
 from threading import Timer
+
+db = Database()
 
 def newslist(offset = 0, count = 10, type = 1, PC = True):
     if type == 6:
         re = recommend(offset)
     else:
-        re = query_db('select * from news where type = ? order by id desc limit ? offset ?', [type, count, offset], one=False)
+        re = db.query("select * from news where type = %d order by id desc limit %d offset %d" % (type, count, offset))
 
     # print '----------------------- query data count: ' + str(len(re)) + ' -------------------------'
 
@@ -27,9 +29,9 @@ def newslist(offset = 0, count = 10, type = 1, PC = True):
 
 def hotList(max = 5, type = 6):
     if type != 6:
-        re = query_db('select * from news where type = ? order by read_count desc limit ? offset 0', [type, max], one=False)
+        re = db.query('select * from news where type = %d order by read_count desc limit %d offset 0' % (type, max))
     else:
-        re = query_db('select * from news order by read_count desc limit ? offset 0', [max], one=False)
+        re = db.query('select * from news order by read_count desc limit %d offset 0' % (max,))
 
     list = []
     for news in re:
@@ -41,7 +43,7 @@ def hotList(max = 5, type = 6):
 
 
 def recommend(offset = 0):
-    re = query_db('select * from news order by read_count desc , create_time asc limit ? offset ?', (20, offset), one=False)
+    re = db.query('select * from news order by read_count desc , create_time asc limit %d offset %d' % (20, offset))
     return re
 
 def detail(target, id):
@@ -49,7 +51,7 @@ def detail(target, id):
         return '参数不能为空'
 
     # read_count + 1
-    query_db('update news set read_count = read_count + 1 where news_id = ?', [id])
+    db.query('update news set read_count = read_count + 1 where news_id = "%s"' % (id,))
 
     if target == __md5(s_meiyou.SOURCE_HOST):
         content = s_meiyou.detail(id)
@@ -78,7 +80,7 @@ def search(keyword, offset = 0, count = 10, PC = True):
     for c in keyword:
         newKey = newKey + c + '%'
 
-    re = query_db("select * from news where title like ? order by id desc limit ? offset ?", ['%' + newKey + '%', count, offset], one=False)
+    re = db.query("select * from news where title like '%s' order by id desc limit %d offset %d" % (newKey, count, offset))
     # print '----------------------- query data count: ' + str(len(re)) + ' -------------------------'
 
     list = manageNews(re, PC)
@@ -95,8 +97,10 @@ def manageNews(args = [], PC = True):
     list = []
     for news in args:
         news['target'] = __md5(news['source_url'])
-        imgs = query_db('select url from image where news_id = ?', [news['news_id']], one=False)
+        imgs = db.query('select url from image where news_id = "%s"' % (news['news_id'],))
         srcs = []
+        print imgs
+
         for img in imgs:
             srcs.append(img['url'])
 

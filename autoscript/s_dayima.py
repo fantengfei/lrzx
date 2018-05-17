@@ -38,7 +38,11 @@ def news():
         source_name = u'大姨妈'
         source_ico = ''
 
-        script.insert_news(news_id, name, source_name, SOURCE_HOST, '', read_count, source_ico, 1, (imgTag['src']))
+
+        print '==========================='
+        print pic
+
+        script.insert_news(news_id, name, source_name, SOURCE_HOST, '', read_count, source_ico, 1, (imgTag['src'],))
 
 
     print '----------------------- insert dayima count: ' + str(len(articles)) + '  -----------------------------'

@@ -7,20 +7,22 @@
 """
 
 import requests
-import cookielib
-import  urllib, urllib2
-from db.sql import query_db
+# import cookielib
+# import  urllib, urllib2
+from db.sql import Database
 
 
 def insert_news(news_id, title, source_name, source_url, author, count, ico, type, imgs):
-    re = query_db('insert or ignore into news (news_id, title, source_name, source_url, author, read_count, source_ico, type) values(?, ?, ?, ?, ?, ?, ?, ?)',
-                  (news_id, title, source_name, source_url, author, count, ico, type),
-                  one = True)
+    db = Database()
+    re = db.execute("insert or ignore into news (news_id, title, source_name, source_url, author, read_count, source_ico, type) \
+                        values('%s', '%s', '%s', '%s', '%s', %d, '%s', '%d')" % \
+                        (news_id, title, source_name, source_url, author, count, ico, type))
 
     for img in imgs:
         if img.find('https:') != 0 and img.find('http:') != 0:
             img = 'https:' + img
-        query_db('insert or ignore into image (news_id, url) values(?, ?)', (news_id, img), one=True)
+
+        db.execute("insert or ignore into image (news_id, url) values('%s', '%s')" % (news_id, img))
 
     return re
 

@@ -22,13 +22,15 @@ def insert(url, type):
     content = script.capture(url)
     list = json.loads(content)
     for item in list:
+        title = item['title'].replace("\n", "")
+        title = title.strip()
         authorURL = ''
         if item['authorPic'] != None and len(item['authorPic']) > 10:
             authorURL = 'https:' + item['authorPic']
 
         news_id = str(item['id']) + '_' + str(item['authorId'])
 
-        script.insert_news(news_id, item['title'], u'搜狐新闻', SOURCE_HOST, item['authorName'], 0,
+        script.insert_news(news_id, title, u'搜狐新闻', SOURCE_HOST, item['authorName'], 0,
                            authorURL, type, item['images'])
 
     print '----------------------- insert souhu type:'+str(type)+' count:' + str(len(list)) + '  -----------------------------'

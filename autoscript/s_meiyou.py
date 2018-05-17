@@ -66,10 +66,15 @@ def insert(content, type):
     list = json.loads(content)
     source_ico = ''
     for news in list['data']['feeds']:
+        author = news['author'].replace("\n", "")
+        author = author.strip()
+        title = news['title'].replace("\n", "")
+        title = title.strip()
+
         imgs = []
         for img in news['images']:
             imgs.append(img['src'])
-        script.insert_news(news['id'], news['title'], u'美柚', SOURCE_HOST, news['author'], news['review_count'],
+        script.insert_news(news['id'], title, u'美柚', SOURCE_HOST, author, news['review_count'],
                            source_ico, type, imgs)
 
     print '----------------------- insert meiyou type '+str(type)+' count: ' + str(len(list)) + '  -----------------------------'
