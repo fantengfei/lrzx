@@ -99,7 +99,6 @@ def manageNews(args = [], PC = True):
         news['target'] = __md5(news['source_url'])
         imgs = db.query('select url from image where news_id = "%s"' % (news['news_id'],))
         srcs = []
-        print imgs
 
         for img in imgs:
             srcs.append(img['url'])
