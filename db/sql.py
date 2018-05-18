@@ -14,8 +14,11 @@ import config
 class Database(object):
     __cursor = None
     __conn = None
+    __mark = 0
 
-    def __init__(self):
+    def __init__(self, mark = 'unknow'):
+        self.__mark = mark
+        print '============================== mysql connect mark: %s ==================================' % mark
         self.__conn = MySQLdb.connect(config.HOST, config.USER, config.PASSWORD, config.DATABASE, charset='utf8', cursorclass = MySQLdb.cursors.DictCursor)
         self.__cursor = self.__conn.cursor()
 
@@ -42,5 +45,6 @@ class Database(object):
 
 
     def __del__(self):
+        print '============================== mysql close mark: %s ==================================' % self.__mark
         self.__cursor.close()
         self.__conn.close()

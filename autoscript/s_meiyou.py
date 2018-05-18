@@ -94,7 +94,7 @@ def detail(id):
     info = soup.find('div', class_ = 'warp')
 
     if info == None:
-        return script.error()
+        return script.error(id)
 
     warp_title = info.find('div', class_ = 'warp-title')
     news_content = info.find('div', class_ = 'news-content')

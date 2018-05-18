@@ -78,11 +78,11 @@ def detail(id):
 
     wrapperTag = soup.find('div', class_ = 'left-wrapper')
     if wrapperTag == None:
-        return script.error()
+        return script.error(id)
 
     titleTag = wrapperTag.h2
     if titleTag == None:
-        return script.error()
+        return script.error(id)
 
     metaTag = wrapperTag.find('div', class_ = 'meta')
     sourceTag = metaTag.a

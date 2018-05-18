@@ -30,8 +30,7 @@ def insert(url, type):
 
         news_id = str(item['id']) + '_' + str(item['authorId'])
 
-        script.insert_news(news_id, title, u'搜狐新闻', SOURCE_HOST, item['authorName'], 0,
-                           authorURL, type, item['images'])
+        script.insert_news(news_id, title, u'搜狐新闻', SOURCE_HOST, item['authorName'], 0, authorURL, type, item['images'])
 
     print '----------------------- insert souhu type:'+str(type)+' count:' + str(len(list)) + '  -----------------------------'
 
@@ -51,7 +50,7 @@ def detail(id):
     info = soup.find('div', class_ = 'text')
 
     if info == None:
-        return script.error()
+        return script.error(id)
 
     headerTag = info.find('div', class_ = 'text-title')
 

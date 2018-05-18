@@ -57,7 +57,7 @@ def detail(id):
     soup = BeautifulSoup(content)
     info = soup.find('div', class_ = 'leftArea')
     if info == None:
-        return script.error()
+        return script.error(id)
 
     titleTag = info.find('div', class_ = 'artilce_title')
     newsContent = info.find('div', class_ = 'article_content')

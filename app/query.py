@@ -11,15 +11,16 @@ from autoscript import  s_yidianzixun
 from autoscript import  s_sohu
 from db.sql import Database
 import random
-from threading import Timer
+import threading
 
-db = Database()
+
 
 def newslist(offset = 0, count = 10, type = 1, PC = True):
+    db = Database('newslist')
     if type == 6:
         re = recommend(offset)
     else:
-        re = db.query("select * from news where type = %d order by id desc limit %d offset %d" % (type, count, offset))
+        re = db.query("select * from news where type = %d and status = 1 order by id desc limit %d offset %d" % (type, count, offset))
 
     # print '----------------------- query data count: ' + str(len(re)) + ' -------------------------'
 
@@ -28,10 +29,11 @@ def newslist(offset = 0, count = 10, type = 1, PC = True):
     return list
 
 def hotList(max = 5, type = 6):
+    db = Database('hotlist')
     if type != 6:
-        re = db.query('select * from news where type = %d order by read_count desc limit %d offset 0' % (type, max))
+        re = db.query('select * from news where type = %d and status = 1 order by read_count desc limit %d offset 0' % (type, max))
     else:
-        re = db.query('select * from news order by read_count desc limit %d offset 0' % (max,))
+        re = db.query('select * from news where status = 1 order by read_count desc limit %d offset 0' % (max,))
 
     list = []
     for news in re:
@@ -43,15 +45,16 @@ def hotList(max = 5, type = 6):
 
 
 def recommend(offset = 0):
-    re = db.query('select * from news order by read_count desc , create_time asc limit %d offset %d' % (20, offset))
+    db = Database('recommend')
+    re = db.query('select * from news where status = 1 order by read_count desc , create_time asc limit %d offset %d' % (20, offset))
     return re
 
 def detail(target, id):
     if target == None or id == None:
         return '参数不能为空'
 
-    # read_count + 1
-    db.query('update news set read_count = read_count + 1 where news_id = "%s"' % (id,))
+    thread = threading.Thread(target=increase, args=(id,))
+    thread.start()
 
     if target == __md5(s_meiyou.SOURCE_HOST):
         content = s_meiyou.detail(id)
@@ -72,7 +75,13 @@ def detail(target, id):
 
     return '未能匹配到 target'
 
+def increase(id):
+    db = Database('increase')
+    db.query('update news set read_count = read_count + 1 where news_id = "%s"' % (id,))
+    del db
+
 def search(keyword, offset = 0, count = 10, PC = True):
+    db = Database('search')
     if keyword == None:
         return []
 
@@ -80,7 +89,7 @@ def search(keyword, offset = 0, count = 10, PC = True):
     for c in keyword:
         newKey = newKey + c + '%'
 
-    re = db.query("select * from news where title like '%s' order by id desc limit %d offset %d" % (newKey, count, offset))
+    re = db.query("select * from news where title like '%s' and status = 1 order by id desc limit %d offset %d" % (newKey, count, offset))
     # print '----------------------- query data count: ' + str(len(re)) + ' -------------------------'
 
     list = manageNews(re, PC)
@@ -91,6 +100,7 @@ def search(keyword, offset = 0, count = 10, PC = True):
 
 
 def manageNews(args = [], PC = True):
+    db = Database('manageNews')
     if len(args) == 0:
         return args
 
@@ -120,7 +130,7 @@ def auto_script():
     s_yidianzixun.news()
 
     global timer
-    timer = Timer(60 * 60 * 6, auto_script)
+    timer = threading.Timer(60 * 60 * 6, auto_script)
     timer.start()
 
 
