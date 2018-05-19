@@ -12,7 +12,7 @@ import threading
 
 def insert_news(news_id, title, source_name, source_url, author, count, ico, type, imgs):
     db = Database('insert')
-    re = db.execute("insert or ignore into news (news_id, title, source_name, source_url, author, read_count, source_ico, type) \
+    re = db.execute("insert ignore into news (news_id, title, source_name, source_url, author, read_count, source_ico, type) \
                         values('%s', '%s', '%s', '%s', '%s', %d, '%s', '%d')" % \
                         (news_id, title, source_name, source_url, author, count, ico, type))
 
@@ -20,7 +20,7 @@ def insert_news(news_id, title, source_name, source_url, author, count, ico, typ
         if img.find('https:') != 0 and img.find('http:') != 0:
             img = 'https:' + img
 
-        db.execute("insert or ignore into image (news_id, url) values('%s', '%s')" % (news_id, img))
+        db.execute("insert ignore into image (news_id, url) values('%s', '%s')" % (news_id, img))
     return re
 
 
