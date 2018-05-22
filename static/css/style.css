@@ -125,7 +125,7 @@ a, a:focus, a:hover, input, input:focus, button, a:active {
     display: flex;  justify-content: flex-start; align-items: center; margin-top: 10px; color: #808080;
 }
 
-item-sub-one-layout {
+.item-sub-one-layout {
     line-height: 0.4rem; margin-top: 0px;
 }
 

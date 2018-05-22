@@ -116,7 +116,7 @@ def manageNews(args = [], PC = True):
 
         if PC:
             count = 1 if len(srcs) < 4 else 4
-            if len(srcs) == 2 or len(srcs) == 3:
+            if len(srcs) == 2:
                 count = 2
         else:
             count = 3
