@@ -18,9 +18,10 @@ import threading
 def newslist(offset = 0, count = 10, type = 1, PC = True):
     db = Database('newslist')
     if type == 6:
+        # 推荐
         re = recommend(offset)
     else:
-        re = db.query("select * from news where type = %d and status = 1 order by id desc limit %d offset %d" % (type, count, offset))
+        re = db.query("select * from news where type = %d and status = 1 order by create_time desc limit %d offset %d" % (type, count, offset))
 
     # print '----------------------- query data count: ' + str(len(re)) + ' -------------------------'
 
@@ -46,7 +47,7 @@ def hotList(max = 5, type = 6):
 
 def recommend(offset = 0):
     db = Database('recommend')
-    re = db.query('select * from news where status = 1 order by read_count desc , create_time asc limit %d offset %d' % (20, offset))
+    re = db.query('select * from news where status = 1 order by read_count asc, create_time desc limit %d offset %d' % (20, offset))
     return re
 
 def detail(target, id):
