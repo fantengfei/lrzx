@@ -123,7 +123,7 @@ def manageNews(args = [], PC = True):
                 count = 2
         else:
             count = 3
-            if length == 2 or (rdm % 3 == 0 and length > 3):
+            if length == 2 or rdm % 3 == 0:
                 count = 2
         news['imgs'] = srcs[:count]
         list.append(news)
