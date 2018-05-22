@@ -7,8 +7,8 @@
                 {{ summary_style(news) }}
             {%- else %}
 
-                {#只有一张图没有摘要的情况#}
-                {%- if news.imgs|length == 1 %}
+                {#只有 1 或 2 张图没有摘要的情况#}
+                {%- if news.imgs|length == 1 or news.imgs|length == 2 %}
                     <div class="img-layout"><img src={{ news.imgs[0] }}  alt={{ webtitle }}/></div>
                 {%- endif -%}
 
