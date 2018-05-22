@@ -47,14 +47,14 @@ def hotList(max = 5, type = 6):
 
 def recommend(offset = 0):
     db = Database('recommend')
-    re = db.query('select * from news where status = 1 order by read_count asc, create_time desc limit %d offset %d' % (20, offset))
+    re = db.query('select * from news where status = 1 order by create_time desc, read_count desc limit %d offset %d' % (20, offset))
     return re
 
 def detail(target, id):
     if target == None or id == None:
         return '参数不能为空'
 
-    thread = threading.Thread(target=increase, args=(id,))
+    thread = threading.Thread(target=increase, name='increase', args=(id,))
     thread.start()
 
     if target == __md5(s_meiyou.SOURCE_HOST):
@@ -78,7 +78,8 @@ def detail(target, id):
 
 def increase(id):
     db = Database('increase')
-    db.query('update news set read_count = read_count + 1 where news_id = "%s"' % (id,))
+    sql = 'update news set read_count = read_count + 1 where news_id = "%s"' % (id,)
+    db.execute(sql)
     del db
 
 def search(keyword, offset = 0, count = 10, PC = True):
