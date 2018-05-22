@@ -114,15 +114,16 @@ def manageNews(args = [], PC = True):
         for img in imgs:
             srcs.append(img['url'])
 
-        if PC:
-            count = 1 if len(srcs) < 4 else 4
+        rdm = random.randint(0, 9)
+        length = len(srcs)
 
-            rdm = random.randint(0,10)
-            if len(srcs) == 2 or rdm % 3 == 0:
+        if PC:
+            count = 1 if length < 4 else 4
+            if length == 2 or (rdm % 3 == 0 and length == 3):
                 count = 2
         else:
             count = 3
-            if len(srcs) == 2:
+            if length == 2 or (rdm % 3 == 0 and length > 3):
                 count = 2
         news['imgs'] = srcs[:count]
         list.append(news)
