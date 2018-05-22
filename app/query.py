@@ -117,8 +117,8 @@ def manageNews(args = [], PC = True):
         if PC:
             count = 1 if len(srcs) < 4 else 4
 
-            rdm = random.randint(0,9)
-            if len(srcs) == 2 or rdm % 2 == 0:
+            rdm = random.randint(0,10)
+            if len(srcs) == 2 or rdm % 3 == 0:
                 count = 2
         else:
             count = 3
