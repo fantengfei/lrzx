@@ -16,10 +16,6 @@ def insert_news(news_id, title, source_name, source_url, author, count, ico, typ
                         values('%s', '%s', '%s', '%s', '%s', %d, '%s', '%d', '%s')" % \
                         (news_id, title, source_name, source_url, author, count, ico, type, summary))
 
-    print "insert ignore into news (news_id, title, source_name, source_url, author, read_count, source_ico, type) \
-                        values('%s', '%s', '%s', '%s', '%s', %d, '%s', '%d', '%s')" % \
-                        (news_id, title, source_name, source_url, author, count, ico, type, summary)
-
     for img in imgs:
         if img.find('https:') != 0 and img.find('http:') != 0:
             img = 'https:' + img
