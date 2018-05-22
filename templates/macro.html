@@ -13,12 +13,12 @@
                 {%- endif -%}
 
                 {#多图的情况#}
-                <div class="item-right-layout {% if news.imgs|length != 1 %}  item-multi-container {%- endif %}">
+                <div class="item-right-layout {% if news.imgs|length != 1 or news.imgs|length != 2 %}  item-multi-container {%- endif %}">
                     <div class="btn-link title-p-layout">{{ news.title }}</div>
                     {%- if news.imgs|length >= 3 -%}
                         {{ multi_img(news.imgs) }}
                     {%- endif -%}
-                    <div class="item-sub-layout {% if news.imgs|length != 1 %}  item-sub-one-layout {% endif %}">
+                    <div class="item-sub-layout {% if news.imgs|length != 1 or news.imgs|length != 2 %}  item-sub-one-layout {% endif %}">
                         {{ sub_info(news.read_count, news.source_name, news.author, news.source_ico) }}
                     </div>
                 </div>
