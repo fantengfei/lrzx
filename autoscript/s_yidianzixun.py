@@ -54,6 +54,7 @@ def insert(url, type, cookie):
         title = title.strip()
         sourceName = u'一点资讯'
         author = news['source']
+        summary = news['summary']
 
         ico = ''
         if news.has_key('wemedia_info') and news['wemedia_info'].has_key('image'):
@@ -67,7 +68,7 @@ def insert(url, type, cookie):
         if title == None or news_id == None:
             continue
 
-        script.insert_news(news_id, title, sourceName, SOURCE_HOST, author, 0, ico, type, imgs)
+        script.insert_news(news_id, title, sourceName, SOURCE_HOST, author, 0, ico, type, imgs, summary)
 
     print '--------------insert yidianzixun type:'+str(type)+' count:' + str(len(content['result'])) + '-----------------------------------'
 

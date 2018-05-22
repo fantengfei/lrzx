@@ -2,19 +2,27 @@
 {% macro cell(news) -%}
     <div class="item-layout">
         <a class="item-layout-a" target="_blank" href={{ url_for('detail', target=news.target, id=news.news_id) }}>
-            {%- if news.imgs|length == 1 %}
-                <div class="img-layout"><img src={{ news.imgs[0] }} /></div>
-            {%- endif -%}
+            {%- if news.imgs|length == 2 and news.summary != '' and news.summary != None %}
+                {#有摘要的情况#}
+                {{ summary_style(news) }}
+            {%- else %}
 
-            <div class="item-right-layout">
-                <div class="btn-link title-p-layout">{{ news.title }}</div>
-                {%- if news.imgs|length >= 3 -%}
-                    {{ multi_img(news.imgs) }}
+                {#只有一张图没有摘要的情况#}
+                {%- if news.imgs|length == 1 %}
+                    <div class="img-layout"><img src={{ news.imgs[0] }}  alt={{ webtitle }}/></div>
                 {%- endif -%}
-                <div class="item-sub-layout {% if news.imgs|length != 1 %}  item-sub-one-layout {% endif %}">
-                    {{ sub_info(news.read_count, news.source_name, news.author, news.source_ico) }}
+
+                {#多图的情况#}
+                <div class="item-right-layout {% if news.imgs|length != 1 %}  item-multi-container {%- endif %}">
+                    <div class="btn-link title-p-layout">{{ news.title }}</div>
+                    {%- if news.imgs|length >= 3 -%}
+                        {{ multi_img(news.imgs) }}
+                    {%- endif -%}
+                    <div class="item-sub-layout {% if news.imgs|length != 1 %}  item-sub-one-layout {% endif %}">
+                        {{ sub_info(news.read_count, news.source_name, news.author, news.source_ico) }}
+                    </div>
                 </div>
-            </div>
+            {%- endif %}
         </a>
         <div class="separate-div"></div>
     </div>
@@ -23,7 +31,7 @@
 {% macro sub_info(count, name, author, ico) -%}
     <span class="sub-p-layout">
         {%- if ico != ''  %}
-            <img class="img-circle ico-img" src={{ ico }} />
+            <img class="img-circle ico-img" src={{ ico }} alt={{ author }} />
         {%- endif -%}
 
         {%- if author != '' %}
@@ -38,10 +46,25 @@
     </span>
 {%- endmacro -%}
 
+{%- macro summary_style(news) %}
+    <div class="full-img-container">
+        <div class="full-img-layout" style="background-image: url({{ news.imgs[0] }})">
+            <div class="background-cover"></div>
+        </div>
+    </div>
+    <div class="full-info-container">
+            <div class="tull-title-div">{{ news.title }}</div>
+            <div class="full-summary-div">{{ news.summary }}</div>
+            <div class="full-sub-div">
+                {{ sub_info(news.read_count, news.source_name, news.author, news.source_ico) }}
+            </div>
+        </div>
+{%- endmacro %}
+
 {%- macro multi_img(imgs) -%}
     <div class="img-multi-layout">
         {%- for img in imgs -%}
-            <div><img src={{ img }}></div>
+            <div><img src={{ img }} alt={{ webtitle }}></div>
         {%- endfor -%}
     </div>
 {%- endmacro -%}

@@ -10,11 +10,11 @@ import requests
 from db.sql import Database
 import threading
 
-def insert_news(news_id, title, source_name, source_url, author, count, ico, type, imgs):
+def insert_news(news_id, title, source_name, source_url, author, count, ico, type, imgs, summary = ''):
     db = Database('insert')
-    re = db.execute("insert ignore into news (news_id, title, source_name, source_url, author, read_count, source_ico, type) \
-                        values('%s', '%s', '%s', '%s', '%s', %d, '%s', '%d')" % \
-                        (news_id, title, source_name, source_url, author, count, ico, type))
+    re = db.execute("insert ignore into news (news_id, title, source_name, source_url, author, read_count, source_ico, type, summary) \
+                        values('%s', '%s', '%s', '%s', '%s', %d, '%s', '%d', '%s')" % \
+                        (news_id, title, source_name, source_url, author, count, ico, type, summary))
 
     for img in imgs:
         if img.find('https:') != 0 and img.find('http:') != 0:
