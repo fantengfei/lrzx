@@ -1,0 +1,21 @@
+{%- macro banner(items) -%}
+    <div class="banner-container">
+        {%- for news in items %}
+            <div class="banner-item-container" id="banner-item-{{ loop.index }}">
+                <a class="banner-item-image" target="_blank" href="{{ url_for('detail', target=news.target, id=news.news_id) }}" style="background-image: url({{ news.imgs[0] }})">
+                    <div class="banner-item-cover"></div>
+                </a>
+                <div style="flex-grow: 1"></div>
+                <div class="banner-bottom-info">{{ news.title }}</div>
+            </div>
+        {%- endfor %}
+
+        <div class="banner-switch banner-switch-left"><i class="iconfont hot-i-layout"></i></div>
+        <div class="banner-switch banner-switch-right"><i class="iconfont hot-i-layout"></i></div>
+    </div>
+    <div class="banner-bottom-mark-container">
+        {%- for n in items  %}
+            <div class="banner-bottom-mark" id="banner-mark-{{ loop.index }}"></div>
+        {%- endfor %}
+    </div>
+{%- endmacro %}

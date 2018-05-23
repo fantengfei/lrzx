@@ -15,7 +15,7 @@ app.debug = False
 @app.route('/')
 @app.route('/home')
 def index():
-    return render_template('index.html', list = query.newslist( type = 6, PC = __ISPC()), hots = query.hotList(type=6))
+    return render_template('index.html', list=query.newslist( type = 6, PC = __ISPC()), hots=query.hotList(type=6), banners=query.banner())
 
 @app.route('/dayima')
 def dayima():

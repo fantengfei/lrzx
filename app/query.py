@@ -50,6 +50,20 @@ def recommend(offset = 0):
     re = db.query('select * from news where status = 1 order by create_time desc, read_count desc limit %d offset %d' % (20, offset))
     return re
 
+def banner():
+    db = Database('banner')
+    re = db.query('select * from news where create_time in (select max(create_time) from `news` where status=1 group by type)')
+
+    list = []
+    types = []
+    for n in re:
+        if n['type'] not in types:
+            types.append(n['type'])
+            list.append(n)
+
+    return manageNews(list)
+
+
 def detail(target, id):
     if target == None or id == None:
         return '参数不能为空'
@@ -82,6 +96,8 @@ def increase(id):
     db.execute(sql)
     del db
 
+
+
 def search(keyword, offset = 0, count = 10, PC = True):
     db = Database('search')
     if keyword == None:
@@ -106,6 +122,7 @@ def manageNews(args = [], PC = True):
     if len(args) == 0:
         return args
 
+    haveFullStyle = False
     list = []
     for news in args:
         news['target'] = __md5(news['source_url'])
@@ -120,12 +137,15 @@ def manageNews(args = [], PC = True):
 
         if PC:
             count = 1 if length < 4 else 4
-            if length == 2 or (rdm % 3 == 0 and length == 3):
+            if rdm % 2 == 0 and news['summary'] != None and haveFullStyle == False:
+                haveFullStyle = True
                 count = 2
         else:
             count = 3
-            if length == 2 or rdm % 3 == 0:
+            if rdm % 2 == 0 and news['summary'] != None and haveFullStyle == False:
+                haveFullStyle = True
                 count = 2
+
         news['imgs'] = srcs[:count]
         list.append(news)
 

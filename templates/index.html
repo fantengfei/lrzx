@@ -4,6 +4,8 @@
 
     <div class="container container-wrapper">
         <div class="col-md-7 content-layout" id="news-container">
+            {%- import 'banner_macro.html' as bannerMacro %}
+            {{ bannerMacro.banner(banners) }}
             {%- include 'newsFactory.html' %}
         </div>
 
@@ -15,6 +17,7 @@
         </div>
     </div>
     <script src={{ url_for('static', filename='js/index.js') }} type='text/javascript'></script>
+    <script src={{ url_for('static', filename='js/banner.js') }} type='text/javascript'></script>
 {% endblock %}
 
 
