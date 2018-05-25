@@ -7,67 +7,83 @@
                 {{ summary_style(news) }}
             {%- else %}
 
-                {#只有 1 或 2 张图没有摘要的情况#}
-                {%- if news.imgs|length == 1 or news.imgs|length == 2 %}
-                    <div class="img-layout"><img src={{ news.imgs[0] }}  alt={{ webtitle }}/></div>
-                {%- endif -%}
-
                 {#多图的情况#}
-                <div class="item-right-layout {% if news.imgs|length != 1 and news.imgs|length != 2 %}  item-multi-container {%- endif %}">
-                    <div class="btn-link title-p-layout">{{ news.title }}</div>
-                    {%- if news.imgs|length >= 3 -%}
-                        {{ multi_img(news.imgs) }}
-                    {%- endif -%}
-                    <div class="item-sub-layout {% if news.imgs|length != 1 and news.imgs|length != 2 %}  item-sub-one-layout {% endif %}">
-                        {{ sub_info(news.read_count, news.source_name, news.author, news.source_ico) }}
-                    </div>
-                </div>
+                {%- if news.imgs|length >= 3 %}
+                    {{ multi_img_layout(news) }}
+                {%- else %}
+                    {{ only_img_layout(news) }}
+                {%- endif %}
+
             {%- endif %}
         </a>
         <div class="separate-div"></div>
     </div>
 {%- endmacro  %}
 
-{% macro sub_info(count, name, author, ico) -%}
-    <span class="sub-p-layout">
-        {%- if ico != ''  %}
-            <img class="img-circle ico-img" src={{ ico }} alt={{ author }} />
-        {%- endif -%}
 
-        {%- if author != '' %}
-            {{ author }}
-        {%- else %}
-            {{ name }}
-        {%- endif -%}
+{#只有 1 或 2 张图没有摘要的情况#}
+{%- macro only_img_layout(news) %}
+    {%- if news.imgs|length > 0 and news.is_pc %}
+        <div class="img-layout" style="margin-right: 10px;"><img src={{ news.imgs[0] }}  alt={{ webtitle }}/></div>
+    {%- endif -%}
 
-        {%- if count != 0 -%}
-            &nbsp;&nbsp;&nbsp;&nbsp;{{ count }} 热度
+    <div class="item-right-layout">
+        <div class="btn-link title-p-layout">{{ news.title }}</div>
+        {{ sub_info(news) }}
+    </div>
+
+    {%- if news.imgs|length > 0 and news.is_pc == False %}
+        <div class="img-layout" style="margin-left: 10px;"><img src={{ news.imgs[0] }}  alt={{ webtitle }}/></div>
+    {%- endif -%}
+{%- endmacro  %}
+
+
+{#多图样式#}
+{%- macro multi_img_layout(news) %}
+    <div class="item-right-layout item-multi-container">
+        <div class="btn-link title-p-layout">{{ news.title }}</div>
+        {%- if news.imgs|length >= 3 -%}
+            <div class="img-multi-layout">
+                {%- for img in news.imgs -%}
+                    <div><img src={{ img }} alt={{ webtitle }}></div>
+                {%- endfor -%}
+            </div>
         {%- endif -%}
-    </span>
+        <div> {{ sub_info(news) }} </div>
+    </div>
+{%- endmacro %}
+
+{% macro sub_info(news, color = '#808080') -%}
+    <span class="sub-p-layout item-sub-layout" style="color: {{ color }};">
+            {%- if news.source_ico != ''  %}
+                <img class="img-circle ico-img" src="{{ news.source_ico }}" alt="{{ news.author }}" />
+            {%- endif -%}
+
+            {%- if news.author != '' %}
+                {{ news.author }}
+            {%- else %}
+                {{ news.source_name }}
+            {%- endif -%}
+
+            {%- if news.read_count != 0 -%}
+                &nbsp;&nbsp;&nbsp;&nbsp;{{ news.read_count }} 热度
+            {%- endif -%}
+        </span>
 {%- endmacro -%}
 
+{#有简介的样式#}
 {%- macro summary_style(news) %}
     <div class="full-img-container">
         <div class="full-img-layout" style="background-image: url({{ news.imgs[0] }})">
-            <div class="background-cover"></div>
-        </div>
-    </div>
-    <div class="full-info-container">
-            <div class="tull-title-div">{{ news.title }}</div>
-            <div class="full-summary-div">{{ news.summary }}</div>
-            <div class="full-sub-div">
-                {{ sub_info(news.read_count, news.source_name, news.author, news.source_ico) }}
+            <div class="background-cover full-info-container">
+                <div class="full-title-div">{{ news.title }}</div>
+                <div class="full-summary-div">{{ news.summary }}</div>
+                <div>{{ sub_info(news, '#ffffff') }}</div>
+
             </div>
         </div>
-{%- endmacro %}
-
-{%- macro multi_img(imgs) -%}
-    <div class="img-multi-layout">
-        {%- for img in imgs -%}
-            <div><img src={{ img }} alt={{ webtitle }}></div>
-        {%- endfor -%}
     </div>
-{%- endmacro -%}
+{%- endmacro %}
 
 
 

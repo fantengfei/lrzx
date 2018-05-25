@@ -126,6 +126,7 @@ def manageNews(args = [], PC = True):
     list = []
     for news in args:
         news['target'] = __md5(news['source_url'])
+        news['is_pc'] = PC
         imgs = db.query('select url from image where news_id = "%s"' % (news['news_id'],))
         srcs = []
 
