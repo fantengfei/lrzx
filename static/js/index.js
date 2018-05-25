@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    reload_cell_style()
+
     var keyword = searchKeyword()
     if (keyword != undefined) {
         $('#search-keyword').val(decodeURIComponent(keyword))
@@ -47,6 +49,7 @@ $(document).ready(function() {
         target.append('<div class="page_loading base-style"><img src="//' + domain + '/static/img/loading.gif" />加载中...</div>')
         $.get('//'+domain+'/load_more/' + offset).done(function(data) {
             target.append(data)
+            reload_cell_style()
             if (data != '') {
                 $('.page_loading').remove()
             } else {
@@ -57,4 +60,20 @@ $(document).ready(function() {
             list_loading = false
         })
     }
+
+    function reload_cell_style() {
+        // macro.html img
+        var width = isPC() ? '24%' : '32.7%'
+        $('.img-multi-layout div').css({'min-width': width, 'max-width': width})
+        $('.item-layout-a').attr('target',  isPC() ? '_blank' : '_self')
+
+
+        // 分割线
+        var height = isPC() ? '1px' : '0.5px'
+        var color = isPC() ? '#f2f2f5' : '#ddd'
+        $('.separate-div').css({'height': height, backgroundColor: color})
+        $('.card-a-name').css('border-bottom', height + ' solid ' + color)
+    }
+    
+
 })

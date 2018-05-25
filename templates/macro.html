@@ -132,6 +132,7 @@
 </div>
 {%- endmacro  -%}
 
+{#mobile导航栏#}
 {%- macro mobile_nav(page) -%}
 {%- if page != 'detail' %}
     <div class="mobile-header navbar-fixed-top">
@@ -150,6 +151,7 @@
 {%- endmacro -%}
 
 
+{#PC 导航栏#}
 {%- macro nav_item(ispc, page) -%}
     {%- if ispc==False %}
         {%- set item_prefix = "mobile-" %}

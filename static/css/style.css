@@ -400,7 +400,7 @@ video {
 
 .banner-bottom-mark-container {
     height: 4px; width: 100%; background-color: rgba(0,0,0,0.75);
-    position: relative; z-index: 10; margin-top: -4px; margin-bottom: 10px;
+    position: relative; z-index: 10; margin-top: -4px; margin-bottom: 5px;
     display: flex; align-items: stretch;
 
 }
