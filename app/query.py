@@ -5,10 +5,7 @@
     :copyright: (c) 2018 by Taffy.
 """
 
-from autoscript import  s_meiyou
-from autoscript import  s_dayima
-from autoscript import  s_yidianzixun
-from autoscript import  s_sohu
+from autoscript import s_meiyou, s_dayima, s_yidianzixun, s_sohu, script
 from db.sql import Database
 import random
 import threading
@@ -64,7 +61,7 @@ def banner():
     return manageNews(list)
 
 
-def detail(target, id):
+def insert_detail(target, id):
     if target == None or id == None:
         return '参数不能为空'
 
@@ -90,10 +87,26 @@ def detail(target, id):
 
     return '未能匹配到 target'
 
+
+def detail(id):
+    if id == None:
+        return '参数不能为空'
+
+    thread = threading.Thread(target=increase, name='increase', args=(id,))
+    thread.start()
+
+    db = Database()
+    re = db.query('select * from detail where news_id = "%s" and status = 1' % (id, ), one=True)
+
+    if re == None or len(re['content']) < 10:
+        return script.error(id)
+    return re
+
+
 def increase(id):
     db = Database('increase')
-    sql = 'update news set read_count = read_count + 1 where news_id = "%s"' % (id,)
-    db.execute(sql)
+    sql = 'update news set read_count = read_count + 1 where news_id = "%s"'
+    db.execute(sql, (id,))
     del db
 
 
@@ -125,7 +138,7 @@ def manageNews(args = [], PC = True):
     haveFullStyle = False
     list = []
     for news in args:
-        news['target'] = __md5(news['source_url'])
+        # news['target'] = __md5(news['source_url'])
         news['is_pc'] = PC
         imgs = db.query('select url from image where news_id = "%s"' % (news['news_id'],))
         srcs = []
@@ -165,7 +178,19 @@ def auto_script():
 
 
 def test():
-    return s_yidianzixun.news()
+    db = Database('test')
+    sql = "select * from news"
+    re = db.query(sql)
+    del db
+
+    count = 0
+    for news in re:
+        insert_detail(__md5(news['source_url']), news['news_id'])
+        count = count + 1
+
+    print count
+
+    return '<center><h1>'+len(re)+'</h1></center>'
 
 
 def __md5(str):

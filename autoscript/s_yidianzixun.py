@@ -70,6 +70,8 @@ def insert(url, type, cookie):
 
         script.insert_news(news_id, title, sourceName, SOURCE_HOST, author, 0, ico, type, imgs, summary)
 
+        detail(news_id)
+
     print '--------------insert yidianzixun type:'+str(type)+' count:' + str(len(content['result'])) + '-----------------------------------'
 
 
@@ -93,4 +95,6 @@ def detail(id):
     if detail == None:
         detail = wrapperTag.find('div', class_ = 'video-wrapper')
 
-    return {'title': titleTag.string, 'time': timeTag.string, 'source': sourceTag.string, 'content': detail}
+    # return {'title': titleTag.string, 'time': timeTag.string, 'source': sourceTag.string, 'content': detail}
+
+    script.insert_detail(id, titleTag.string, detail, sourceTag.string, timeTag.string)

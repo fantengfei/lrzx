@@ -32,6 +32,8 @@ def insert(url, type):
 
         script.insert_news(news_id, title, u'搜狐新闻', SOURCE_HOST, item['authorName'], 0, authorURL, type, item['images'])
 
+        detail(news_id)
+
     print '----------------------- insert souhu type:'+str(type)+' count:' + str(len(list)) + '  -----------------------------'
 
 
@@ -41,7 +43,7 @@ def detail(id):
         print 'url 不能为 nil'
         return
 
-    content = script.capture('http://www.sohu.com/a/' + id)
+    content = script.capture('http://www.sohu.com/a/' + str(id))
     if content == "FAIL" or content == None:
         print '内容抓取失败'
         return
@@ -74,4 +76,6 @@ def detail(id):
     news_content.find('span', class_ = 'backword').extract()
     news_content = unicode(news_content).replace("<br/>", "")
 
-    return {'title': title, 'time': timeTag.string, 'source': author, 'content': news_content}
+    # return {'title': title, 'time': timeTag.string, 'source': author, 'content': news_content}
+
+    script.insert_detail(id, title, news_content, author, timeTag.string)

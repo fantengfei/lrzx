@@ -52,10 +52,9 @@ def load_more(offset = 0, keyword = None, type = 1):
     return render_template('newsFactory.html', list = news)
 
 
-@app.route('/detail/<string:target>/<string:id>')
-def detail(target, id):
-    return render_template('detail.html', info = query.detail(target, id), hots = query.hotList())
-
+@app.route('/detail/<string:id>')
+def detail(id):
+    return render_template('detail.html', info=query.detail(id), hots=query.hotList())
 
 @app.route('/search/<string:keyword>')
 def search(keyword):

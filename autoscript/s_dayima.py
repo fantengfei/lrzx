@@ -40,6 +40,7 @@ def news():
 
         script.insert_news(news_id, name, source_name, SOURCE_HOST, '', read_count, source_ico, 1, (imgTag['src'],))
 
+        detail(news_id)
 
     print '----------------------- insert dayima count: ' + str(len(articles)) + '  -----------------------------'
 
@@ -66,8 +67,11 @@ def detail(id):
 
     title = titleTag.string
     time = info.find('span', class_ = 'artilce_time')
-    sources = u'\u5927\u59e8\u5988\u7f51\u000d\u000a'
+    sources = u'大姨妈'
 
     # print title.string + '-' + time.string
 
-    return {'title': title, 'time': time.string, 'source': sources, 'content': bref + newsContent}
+    # data = {'title': title, 'time': time.string, 'source': sources, 'content': bref + newsContent}
+
+    script.insert_detail(id, title, bref + newsContent, sources, time.string)
+

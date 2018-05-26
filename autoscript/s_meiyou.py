@@ -74,8 +74,9 @@ def insert(content, type):
         imgs = []
         for img in news['images']:
             imgs.append(img['src'])
-        script.insert_news(news['id'], title, u'美柚', SOURCE_HOST, author, news['review_count'],
-                           source_ico, type, imgs)
+        script.insert_news(news['id'], title, u'美柚', SOURCE_HOST, author, news['review_count'], source_ico, type, imgs)
+
+        detail(news['id'])
 
     print '----------------------- insert meiyou type '+str(type)+' count: ' + str(len(list)) + '  -----------------------------'
 
@@ -86,7 +87,7 @@ def detail(id):
         print 'url 不能为 nil'
         return
 
-    content = script.capture('https://news.meiyou.com/news_detail?news_id=' + id)
+    content = script.capture('https://news.meiyou.com/news_detail?news_id=' + str(id))
     if content == "FAIL" or content == None:
         return '内容抓取失败'
 
@@ -106,4 +107,6 @@ def detail(id):
 
     # print title.string + '-' + time.string + '-' + sources[-1].string
 
-    return {'title': title.string, 'time': time.string, 'source': sources[-1].string, 'content': news_content}
+    # return {'title': title.string, 'time': time.string, 'source': sources[-1].string, 'content': news_content}
+
+    script.insert_detail(id, title.string, news_content, sources[-1].string, time.string)
