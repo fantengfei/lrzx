@@ -105,8 +105,5 @@ def detail(id):
     time = warp_title.find('span', class_ = 'n-time')
     sources = warp_title.findAll('span')
 
-    # print title.string + '-' + time.string + '-' + sources[-1].string
+    return script.insert_detail(id, title.string, news_content, sources[-1].string, time.string)
 
-    # return {'title': title.string, 'time': time.string, 'source': sources[-1].string, 'content': news_content}
-
-    script.insert_detail(id, title.string, news_content, sources[-1].string, time.string)

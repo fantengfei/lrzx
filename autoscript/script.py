@@ -9,10 +9,6 @@
 import requests
 from db.sql import Database
 import threading
-import cgi
-import HTMLParser
-
-html_parser = HTMLParser.HTMLParser()
 
 def insert_news(news_id, title, source_name, source_url, author, count, ico, type, imgs, summary = ''):
     db = Database('insert')
@@ -29,14 +25,9 @@ def insert_news(news_id, title, source_name, source_url, author, count, ico, typ
 
 def insert_detail(news_id, title, content, source, publishTime):
     db = Database('detail')
-    # content = cgi.escape(content)
     sql = """insert ignore into detail (news_id, title, content, source, publish_time) values('%s', '%s', '%s', '%s', '%s')"""
     re = db.execute(sql, par=(news_id, title, content, source, publishTime))
-
-    print re
-
     return re
-
 
 def capture(url, headers = None):
     if url == None:

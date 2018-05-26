@@ -2,7 +2,7 @@
     <div class="banner-container">
         {%- for news in items %}
             <div class="banner-item-container" id="banner-item-{{ loop.index }}">
-                <a class="banner-item-image" target="_blank" href="{{ url_for('detail', target=news.target, id=news.news_id) }}" style="background-image: url({{ news.imgs[0] }})">
+                <a class="banner-item-image" target="_blank" href="{{ url_for('detail', id=news.news_id) }}" style="background-image: url({{ news.imgs[0] }})">
                     <div class="banner-item-cover"></div>
                 </a>
                 <div style="flex-grow: 1"></div>

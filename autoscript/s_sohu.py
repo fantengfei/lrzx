@@ -76,6 +76,4 @@ def detail(id):
     news_content.find('span', class_ = 'backword').extract()
     news_content = unicode(news_content).replace("<br/>", "")
 
-    # return {'title': title, 'time': timeTag.string, 'source': author, 'content': news_content}
-
-    script.insert_detail(id, title, news_content, author, timeTag.string)
+    return script.insert_detail(id, title, news_content, author, timeTag.string)

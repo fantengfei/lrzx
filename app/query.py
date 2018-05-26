@@ -18,7 +18,7 @@ def newslist(offset = 0, count = 10, type = 1, PC = True):
         # 推荐
         re = recommend(offset)
     else:
-        re = db.query("select * from news where type = %d and status = 1 order by create_time desc limit %d offset %d" % (type, count, offset))
+        re = db.query("""select * from news where type = %d and status = 1 order by create_time desc limit %d offset %d""", (type, count, offset))
 
     # print '----------------------- query data count: ' + str(len(re)) + ' -------------------------'
 
@@ -29,9 +29,9 @@ def newslist(offset = 0, count = 10, type = 1, PC = True):
 def hotList(max = 5, type = 6):
     db = Database('hotlist')
     if type != 6:
-        re = db.query('select * from news where type = %d and status = 1 order by read_count desc limit %d offset 0' % (type, max))
+        re = db.query("""select * from news where type = %d and status = 1 order by read_count desc limit %d offset 0""", (type, max))
     else:
-        re = db.query('select * from news where status = 1 order by read_count desc limit %d offset 0' % (max,))
+        re = db.query("""select * from news where status = 1 order by read_count desc limit %d offset 0""", (max,))
 
     list = []
     for news in re:
@@ -44,12 +44,12 @@ def hotList(max = 5, type = 6):
 
 def recommend(offset = 0):
     db = Database('recommend')
-    re = db.query('select * from news where status = 1 order by create_time desc, read_count desc limit %d offset %d' % (20, offset))
+    re = db.query("""select * from news where status = 1 order by create_time desc, read_count desc limit %d offset %d""", (20, offset))
     return re
 
 def banner():
     db = Database('banner')
-    re = db.query('select * from news where create_time in (select max(create_time) from `news` where status=1 group by type)')
+    re = db.query("""select * from news where create_time in (select max(create_time) from `news` where status=1 group by type)""")
 
     list = []
     types = []
@@ -64,9 +64,6 @@ def banner():
 def insert_detail(target, id):
     if target == None or id == None:
         return '参数不能为空'
-
-    thread = threading.Thread(target=increase, name='increase', args=(id,))
-    thread.start()
 
     if target == __md5(s_meiyou.SOURCE_HOST):
         content = s_meiyou.detail(id)
@@ -96,7 +93,7 @@ def detail(id):
     thread.start()
 
     db = Database()
-    re = db.query('select * from detail where news_id = "%s" and status = 1' % (id, ), one=True)
+    re = db.query("""select * from detail where news_id = '%s' and status = 1""", (id, ), one=True)
 
     if re == None or len(re['content']) < 10:
         return script.error(id)
@@ -105,7 +102,7 @@ def detail(id):
 
 def increase(id):
     db = Database('increase')
-    sql = 'update news set read_count = read_count + 1 where news_id = "%s"'
+    sql = """update news set read_count = read_count + 1 where news_id = '%s'"""
     db.execute(sql, (id,))
     del db
 
@@ -120,7 +117,7 @@ def search(keyword, offset = 0, count = 10, PC = True):
     for c in keyword:
         newKey = newKey + c + '%'
 
-    re = db.query("select * from news where title like '%s' and status = 1 order by id desc limit %d offset %d" % (newKey, count, offset))
+    re = db.query("""select * from news where title like '%s' and status = 1 order by id desc limit %d offset %d""", (newKey, count, offset))
     # print '----------------------- query data count: ' + str(len(re)) + ' -------------------------'
 
     list = manageNews(re, PC)
@@ -140,7 +137,7 @@ def manageNews(args = [], PC = True):
     for news in args:
         # news['target'] = __md5(news['source_url'])
         news['is_pc'] = PC
-        imgs = db.query('select url from image where news_id = "%s"' % (news['news_id'],))
+        imgs = db.query("""select url from image where news_id = '%s'""", (news['news_id'],))
         srcs = []
 
         for img in imgs:
@@ -177,18 +174,18 @@ def auto_script():
     timer.start()
 
 
-def test():
+def test(retry = None):
     db = Database('test')
-    sql = "select * from news"
+    if retry == None:
+        sql = "select * from news where status = 1"
+    else:
+        sql = "select * from news where status = 1 and news_id not in (select news_id from detail)"
+
     re = db.query(sql)
     del db
 
-    count = 0
     for news in re:
-        insert_detail(__md5(news['source_url']), news['news_id'])
-        count = count + 1
-
-    print count
+        print insert_detail(__md5(news['source_url']), news['news_id'])
 
     return '<center><h1>'+len(re)+'</h1></center>'
 

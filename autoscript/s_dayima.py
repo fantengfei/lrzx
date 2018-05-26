@@ -69,9 +69,5 @@ def detail(id):
     time = info.find('span', class_ = 'artilce_time')
     sources = u'大姨妈'
 
-    # print title.string + '-' + time.string
-
-    # data = {'title': title, 'time': time.string, 'source': sources, 'content': bref + newsContent}
-
-    script.insert_detail(id, title, bref + newsContent, sources, time.string)
+    return script.insert_detail(id, title, bref + newsContent, sources, time.string)
 

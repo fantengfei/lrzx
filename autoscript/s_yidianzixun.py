@@ -95,6 +95,4 @@ def detail(id):
     if detail == None:
         detail = wrapperTag.find('div', class_ = 'video-wrapper')
 
-    # return {'title': titleTag.string, 'time': timeTag.string, 'source': sourceTag.string, 'content': detail}
-
-    script.insert_detail(id, titleTag.string, detail, sourceTag.string, timeTag.string)
+    return script.insert_detail(id, titleTag.string, detail, sourceTag.string, timeTag.string)

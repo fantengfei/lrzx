@@ -69,8 +69,9 @@ def autoscript():
 
 
 @app.route('/test')
-def test():
-    return query.test()
+@app.route('/test/<string:retry>')
+def test(retry):
+    return query.test(retry)
 
 
 
