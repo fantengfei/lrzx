@@ -187,7 +187,7 @@ def test(retry = None):
     for news in re:
         print insert_detail(__md5(news['source_url']), news['news_id'])
 
-    return '<center><h1>'+len(re)+'</h1></center>'
+    return '<center><h1> %d </h1></center>' % len(re)
 
 
 def __md5(str):
