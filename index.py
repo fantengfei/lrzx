@@ -5,8 +5,7 @@
     :copyright: (c) 2018 by Taffy.
 """
 
-from flask import Flask, request, redirect
-from flask import render_template
+from flask import Flask, request, redirect, url_for, render_template
 from app import query
 
 app = Flask(__name__)
@@ -37,7 +36,6 @@ def meizhuang():
 def health():
     return render_template('health.html', list=query.newslist(type=5, PC=__ISPC()), hots=query.hotList(type=5))
 
-
 @app.route('/load_more/<int:type>/<int:offset>')
 @app.route('/load_more/<int:offset>/<string:keyword>')
 def load_more(offset = 0, keyword = None, type = 1):
@@ -56,8 +54,12 @@ def load_more(offset = 0, keyword = None, type = 1):
 def detail(id):
     return render_template('detail.html', info=query.detail(id), hots=query.hotList())
 
+@app.route('/channel/w/<string:keyword>')
 @app.route('/search/<string:keyword>')
 def search(keyword):
+    if request.path.find('/channel/w') >= 0:
+        return redirect(url_for('search', keyword=keyword))
+
     list = query.search(keyword, PC = __ISPC())
     return render_template('search.html', list = list, hots = query.hotList())
 
