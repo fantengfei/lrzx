@@ -73,7 +73,11 @@ $(document).ready(function() {
         var color = isPC() ? '#f2f2f5' : '#ddd'
         $('.separate-div').css({'height': height, backgroundColor: color})
         $('.card-a-name').css('border-bottom', height + ' solid ' + color)
-    }
-    
 
+        // cell margin
+
+        var margin = isPC() ? '0.1rem' : '0.15rem'
+        $('.separate-div').css('margin-top', margin)
+        $('.item-layout-a').css('margin-top', margin)
+    }
 })

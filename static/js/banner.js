@@ -28,6 +28,14 @@ $(function () {
     }, 5000)
 
 
+    $('.banner-item-image').hover(function() {
+        $('.banner-switch-right i').addClass('icon-right')
+        $('.banner-switch-left i').addClass('icon-left')
+    }, function () {
+        $('.banner-switch-right i').removeClass('icon-right')
+        $('.banner-switch-left i').removeClass('icon-left')
+    })
+
     $('.banner-switch-right').hover(function () {
         $('.banner-switch-right i').addClass('icon-right')
     }, function () {
