@@ -1,18 +1,21 @@
-{%- set page = 'search' %}
-{%- extends "wrapper.html" %}
+{%- set page = 'beiyun' %}
+{%- extends "front/wrapper.html" %}
 {% block body %}
+
     <div class="container container-wrapper">
         <div class="col-md-7 content-layout" id="news-container">
-            <div class="result-div-layout">搜索结果</div>
-            {%- include 'newsFactory.html' %}
+            {%- include 'front/newsFactory.html' %}
         </div>
 
         <div class="col-md-1"></div>
 
-        <div class="col-md-4 content-right-layout">
-            {% import 'macro.html' as card %}
+        <div class="col-md-4">
+            {%- import 'front/macro.html' as card %}
             {{ card.hot_list(hots) }}
         </div>
     </div>
     <script src={{ url_for('static', filename='js/index.js') }} type='text/javascript'></script>
 {% endblock %}
+
+
+

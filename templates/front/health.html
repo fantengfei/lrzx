@@ -1,16 +1,16 @@
-{%- set page = 'meizhuang' %}
-{%- extends "wrapper.html" %}
+{%- set page = 'health' %}
+{%- extends "front/wrapper.html" %}
 {% block body %}
 
     <div class="container container-wrapper">
         <div class="col-md-7 content-layout" id="news-container">
-            {%- include 'newsFactory.html' %}
+            {%- include 'front/newsFactory.html' %}
         </div>
 
         <div class="col-md-1"></div>
 
         <div class="col-md-4">
-            {%- import 'macro.html' as card %}
+            {%- import 'front/macro.html' as card %}
             {{ card.hot_list(hots) }}
         </div>
     </div>

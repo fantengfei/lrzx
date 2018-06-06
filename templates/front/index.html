@@ -1,18 +1,18 @@
 {%- set page = '/' %}
-{%- extends "wrapper.html" %}
+{%- extends "front/wrapper.html" %}
 {% block body %}
 
     <div class="container container-wrapper">
         <div class="col-md-7 content-layout" id="news-container">
-            {%- import 'banner_macro.html' as bannerMacro %}
+            {%- import 'front/banner_macro.html' as bannerMacro %}
             {{ bannerMacro.banner(banners) }}
-            {%- include 'newsFactory.html' %}
+            {%- include 'front/newsFactory.html' %}
         </div>
 
         <div class="col-md-1"></div>
 
         <div class="col-md-4">
-            {%- import 'macro.html' as card %}
+            {%- import 'front/macro.html' as card %}
             {{ card.hot_list(hots) }}
         </div>
     </div>

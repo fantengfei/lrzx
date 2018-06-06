@@ -7,34 +7,37 @@
 
 from flask import Flask, request, redirect, url_for, render_template
 from app import query
+from admin import admin_api
 
 app = Flask(__name__)
 app.debug = False
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?R/LJDHCS/,/s'
+app.register_blueprint(admin_api)
 
 @app.route('/')
 @app.route('/home')
 def index():
-    return render_template('index.html', list=query.newslist( type = 6, PC = __ISPC()), hots=query.hotList(type=6), banners=query.banner())
+    return render_template('front/index.html', list=query.newslist(type = 6, PC = __ISPC()), hots=query.hotList(type=6), banners=query.banner())
 
 @app.route('/dayima')
 def dayima():
-    return render_template('dayima.html', list=query.newslist(type = 1, PC=__ISPC()), hots=query.hotList(type=1))
+    return render_template('front/dayima.html', list=query.newslist(type = 1, PC=__ISPC()), hots=query.hotList(type=1))
 
 @app.route('/education')
 def education():
-    return render_template('education.html', list=query.newslist(type=2, PC=__ISPC()), hots=query.hotList(type=2))
+    return render_template('front/education.html', list=query.newslist(type=2, PC=__ISPC()), hots=query.hotList(type=2))
 
 @app.route('/beiyun')
 def beiyun():
-    return render_template('beiyun.html', list=query.newslist(type=3, PC=__ISPC()), hots=query.hotList(type=3))
+    return render_template('front/beiyun.html', list=query.newslist(type=3, PC=__ISPC()), hots=query.hotList(type=3))
 
 @app.route('/meizhuang')
 def meizhuang():
-    return render_template('meizhuang.html', list=query.newslist(type=4, PC=__ISPC()), hots=query.hotList(type=4))
+    return render_template('front/meizhuang.html', list=query.newslist(type=4, PC=__ISPC()), hots=query.hotList(type=4))
 
 @app.route('/health')
 def health():
-    return render_template('health.html', list=query.newslist(type=5, PC=__ISPC()), hots=query.hotList(type=5))
+    return render_template('front/health.html', list=query.newslist(type=5, PC=__ISPC()), hots=query.hotList(type=5))
 
 @app.route('/load_more/<int:type>/<int:offset>')
 @app.route('/load_more/<int:offset>/<string:keyword>')
@@ -47,12 +50,12 @@ def load_more(offset = 0, keyword = None, type = 1):
     if len(news) == 0:
         return ''
 
-    return render_template('newsFactory.html', list = news)
+    return render_template('front/newsFactory.html', list = news)
 
 
 @app.route('/detail/<string:id>')
 def detail(id):
-    return render_template('detail.html', info=query.detail(id), hots=query.hotList())
+    return render_template('front/detail.html', info=query.detail(id), hots=query.hotList())
 
 @app.route('/channel/w/<string:keyword>')
 @app.route('/search/<string:keyword>')
@@ -61,7 +64,7 @@ def search(keyword):
         return redirect(url_for('search', keyword=keyword))
 
     list = query.search(keyword, PC = __ISPC())
-    return render_template('search.html', list = list, hots = query.hotList())
+    return render_template('front/search.html', list = list, hots = query.hotList())
 
 
 @app.route('/autoscript')
