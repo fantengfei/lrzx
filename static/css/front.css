@@ -65,6 +65,10 @@ a, a:focus, a:hover, input, input:focus, button, a:active {
     color: #999;
 }
 
+.footer-content p a {
+    color: #999;
+}
+
 
 /*index*/
 .content-layout {
