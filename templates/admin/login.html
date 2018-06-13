@@ -2,8 +2,15 @@
 {%- extends "admin/adminwrapper.html" %}
 {% block body %}
     <div class="login-container-layout">
-        <input type="text" class="form-control" placeholder="请输入用户名" aria-describedby="basic-addon1">
-        <input type="password" class="form-control" placeholder="请输入密码" aria-describedby="basic-addon1">
-        <button type="button" class="btn btn-default">1</button>
+        <div class="login-card">
+            <p><b style="font-size: 20px;">编辑登录</b></p>
+            <input type="text" id="username" class="form-control" placeholder="请输入用户名" aria-describedby="basic-addon1">
+            <input type="password" id="password" class="form-control" placeholder="请输入密码" aria-describedby="basic-addon1">
+            <div class="login-button-card">
+                <button type="button" class="login-btn" id="login-button"> 登录 </button>
+                <span class="login-tip"></span>
+            </div>
+        </div>
     </div>
+    <script src={{ url_for('static', filename='js/login.js') }} type='text/javascript'></script>
 {% endblock %}

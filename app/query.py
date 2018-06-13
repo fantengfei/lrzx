@@ -9,6 +9,7 @@ from autoscript import s_meiyou, s_dayima, s_yidianzixun, s_sohu, script
 from db.sql import Database
 import random
 import threading
+import common
 
 
 
@@ -35,7 +36,7 @@ def hotList(max = 5, type = 6):
 
     list = []
     for news in re:
-        news['target'] = __md5(news['source_url'])
+        news['target'] = common.md5(news['source_url'])
         news['order'] = re.index(news) + 1
         list.append(news)
 
@@ -65,7 +66,7 @@ def insert_detail(target, id):
     if target == None or id == None:
         return '参数不能为空'
 
-    if target == __md5(s_meiyou.SOURCE_HOST):
+    if target == common.md5(s_meiyou.SOURCE_HOST):
         content = s_meiyou.detail(id)
         return content
 
@@ -125,8 +126,6 @@ def search(keyword, offset = 0, count = 10, PC = True):
     return list
 
 
-
-
 def manageNews(args = [], PC = True):
     db = Database('manageNews')
     if len(args) == 0:
@@ -163,14 +162,21 @@ def manageNews(args = [], PC = True):
 
 
 def auto_script():
+    global timer
+    timer = threading.Timer(60 * 60 * 6, auto_script_helper)
+    timer.start()
+
+
+def auto_script_helper():
+    capture()
+    auto_script()
+
+def capture():
     s_meiyou.news()
     s_dayima.news()
     s_sohu.news()
     s_yidianzixun.news()
-
-    global timer
-    timer = threading.Timer(60 * 60 * 6, auto_script)
-    timer.start()
+    script.post_tongji()
 
 
 def test(retry = None):
@@ -184,13 +190,6 @@ def test(retry = None):
     del db
 
     for news in re:
-        print insert_detail(__md5(news['source_url']), news['news_id'])
+        print insert_detail(common.md5(news['source_url']), news['news_id'])
 
     return '<center><h1> %d </h1></center>' % len(re)
-
-
-def __md5(str):
-    import hashlib
-    m = hashlib.md5()
-    m.update(str)
-    return m.hexdigest()

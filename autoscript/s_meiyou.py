@@ -65,6 +65,7 @@ def news():
 def insert(content, type):
     list = json.loads(content)
     source_ico = ''
+    ids = []
     for news in list['data']['feeds']:
         author = news['author'].replace("\n", "")
         author = author.strip()
@@ -78,7 +79,11 @@ def insert(content, type):
 
         detail(news['id'])
 
+        ids.append(news['id'])
+
     print '----------------------- insert meiyou type '+str(type)+' count: ' + str(len(list)) + '  -----------------------------'
+
+    script.appendIDs(ids)
 
 
 

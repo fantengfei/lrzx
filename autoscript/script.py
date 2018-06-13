@@ -9,6 +9,7 @@
 import requests
 from db.sql import Database
 import threading
+import os
 
 def insert_news(news_id, title, source_name, source_url, author, count, ico, type, imgs, summary = ''):
     db = Database('insert')
@@ -51,3 +52,31 @@ def delete(news_id):
     sql = """update news set status = -1 where news_id = '%s'"""
     db.execute(sql, (news_id,))
     del db
+
+
+
+def post_tongji():
+    import requests
+
+    urls = {'file': open('urls.txt', 'rb')}
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    r = requests.post('http://data.zz.baidu.com/urls?site=https://www.somenews.cn&token=SBa14K60QlnF0nz5', files=urls, headers=headers)
+    print r.content
+
+    os.remove('urls.txt')
+
+
+def appendIDs(ids=[]):
+    path = 'urls.txt'
+    if os.path.exists(path) == False:
+        file = open(path, 'w')
+    else:
+        file = open(path, 'a')
+
+    for id in ids:
+        file.write(__generateURL(id))
+    file.close()
+
+
+def __generateURL(id):
+    return 'https://www.somenews.cn/detail/' + str(id) + '\n'

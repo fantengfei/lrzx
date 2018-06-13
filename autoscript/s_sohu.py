@@ -21,6 +21,7 @@ def news():
 def insert(url, type):
     content = script.capture(url)
     list = json.loads(content)
+    ids = []
     for item in list:
         title = item['title'].replace("\n", "")
         title = title.strip()
@@ -34,7 +35,11 @@ def insert(url, type):
 
         detail(news_id)
 
+        ids.append(news_id)
+
     print '----------------------- insert souhu type:'+str(type)+' count:' + str(len(list)) + '  -----------------------------'
+
+    script.appendIDs(ids)
 
 
 

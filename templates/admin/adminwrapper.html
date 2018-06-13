@@ -14,7 +14,7 @@
 
         <!-- Bootstrap -->
         <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-        <link href={{ url_for('static', filename='css/front.css') }} rel="stylesheet" type="text/css" />
+        <link href={{ url_for('static', filename='css/admin.css') }} rel="stylesheet" type="text/css" />
         <link href="//at.alicdn.com/t/font_661408_4axdfmu7tghtcsor.css" rel="stylesheet" />
         <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
         <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
@@ -23,11 +23,6 @@
 
         {% block body %}{% endblock %}
 
-        <div class="col-md-12 footer-wrapper">
-            <div class="footer-content">
-                <p>Copyright © 2018&nbsp;&nbsp;{{ webtitle }}</p>
-            </div>
-        </div>
         <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
         <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </body>

@@ -46,6 +46,8 @@ def insert(url, type, cookie):
     if content.has_key('result') == False:
         return
 
+    ids = []
+
     for news in content['result']:
         if news.has_key('content_type') != True or news['content_type'] != 'news':
             continue
@@ -72,7 +74,11 @@ def insert(url, type, cookie):
 
         detail(news_id)
 
+        ids.append(news_id)
+
     print '--------------insert yidianzixun type:'+str(type)+' count:' + str(len(content['result'])) + '-----------------------------------'
+
+    script.appendIDs(ids)
 
 
 def detail(id):

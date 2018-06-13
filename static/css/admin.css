@@ -1,9 +1,37 @@
 @charset "UTF-8";
 
+body {
+    background-color: #ffffff;-webkit-font-smoothing: antialiased;
+    overflow-x: hidden;}
+a, a:focus, a:hover, input, input:focus, button, a:active {
+    outline: none;
+    text-decoration: none;
+}
+
 .login-container-layout {
-    width: 500px;
-    height: 100px;
+    width: 100%;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 20%;
+}
+
+.login-card {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.login-card .form-control {
+    margin-bottom: 10px;
+}
+
+.login-button-card {
+    display: flex; align-items: center;
+}
+
+.login-button-card .login-btn {
+    background-color: #dd3b3d; color: #fff; border-radius: 4px;
+    padding: 7px 28px; border-width: 0;
+}
+
+.login-button-card .login-tip {
+    font-size: 13px; color: red; margin-left: 15px;
 }

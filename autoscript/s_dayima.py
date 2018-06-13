@@ -20,6 +20,9 @@ def news():
     soup = BeautifulSoup(content)
     articles = soup.findAll('div', class_ = 'dotted')
 
+    ids = []
+
+
     for article in articles:
         title = article.find('div', class_ = 'title')
         aTag = title.a
@@ -42,7 +45,12 @@ def news():
 
         detail(news_id)
 
+        ids.append(news_id)
+
+
     print '----------------------- insert dayima count: ' + str(len(articles)) + '  -----------------------------'
+
+    script.appendIDs(ids)
 
 
 def detail(id):

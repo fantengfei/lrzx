@@ -67,9 +67,9 @@ def search(keyword):
     return render_template('front/search.html', list = list, hots = query.hotList())
 
 
-@app.route('/autoscript')
-def autoscript():
-    query.auto_script()
+@app.route('/capture')
+def capture():
+    query.capture()
     return '<center><h1>success!!</h1></center>'
 
 
@@ -94,4 +94,5 @@ def __ISPC():
 
 
 if __name__ == '__main__':
+    query.auto_script()
     app.run(debug = True)
