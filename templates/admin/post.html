@@ -1,0 +1,26 @@
+{%- set title = "发布文章-丽人资讯" %}
+{%- extends "admin/adminwrapper.html" %}
+{% block body %}
+    <div class="col-md-6 col-md-offset-3">
+        <div class="div-url-layout">
+            <div class="div-tip">粘贴地址:</div>
+            <input placeholder="在此处粘贴要解析的地址" class="form-control" />
+            <button class="btn btn-default" role="group">解析</button>
+        </div>
+
+        <div class="div-title-layout">
+            <div class="div-tip">文章标题:</div>
+            <input placeholder="自动生成后可再次修改" class="form-control" />
+        </div>
+
+        <div class="summary-layout">
+            <div style="padding: 10px 0px">正文内容：</div>
+            <div id="editor">
+                <p>可以通过 URL 解析出内容，也可手动一句一句输入...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="//unpkg.com/wangeditor/release/wangEditor.min.js"></script>
+    <script src={{ url_for('static', filename='js/post.js') }}></script>
+{% endblock %}

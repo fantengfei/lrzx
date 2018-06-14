@@ -40,12 +40,12 @@ def login():
         else:
             return '账号或密码错误！'
 
-    return make_response(render_template('admin/login.html'))
+    return render_template('admin/login.html')
 
 
 @admin_api.route('/post')
 def post():
-    return '<center>post</center>'
+    return render_template('admin/post.html')
 
 
 def __ISPC():

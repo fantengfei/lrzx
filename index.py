@@ -10,7 +10,7 @@ from app import query
 from admin import admin_api
 
 app = Flask(__name__)
-app.debug = False
+app.debug = True
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?R/LJDHCS/,/s'
 app.register_blueprint(admin_api)
 
