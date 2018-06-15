@@ -14,6 +14,9 @@ app.debug = True
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?R/LJDHCS/,/s'
 app.register_blueprint(admin_api)
 
+# 数据自动抓取
+query.auto_script()
+
 @app.route('/')
 @app.route('/home')
 def index():
@@ -94,5 +97,4 @@ def __ISPC():
 
 
 if __name__ == '__main__':
-    query.auto_script()
     app.run(debug = True)
