@@ -43,8 +43,14 @@ def login():
     return render_template('admin/login.html')
 
 
-@admin_api.route('/post')
+@admin_api.route('/post', methods=['POST', 'GET'])
 def post():
+    if request.method == 'POST':
+        content = request.form['content']
+        title = request.form['title']
+
+        return
+
     return render_template('admin/post.html')
 
 
@@ -52,7 +58,6 @@ def __ISPC():
     header = request.headers
     devices = ("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod")
     flag = True
-    print header
     for device in devices:
         if header['User-Agent'].find(device) >= 0:
             flag = False
@@ -61,6 +66,8 @@ def __ISPC():
     return flag
 
 
-
-
+@admin_api.route('/analysis', methods=['POST', 'GET'])
+def analysis():
+    url = request.form['url']
+    return adminQuery.analysisURL(url)
 

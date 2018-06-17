@@ -9,10 +9,11 @@ $(function () {
             return
         }
 
+        var btn = $(this).button('loading');
+
         var domain = document.domain
 
         $('.login-tip').text('')
-        $('.login-tip').append('<img class="login-loading" src="//' + domain + '/static/img/loading.gif" />')
 
         var url = '//' + domain + '/login'
 
@@ -20,7 +21,8 @@ $(function () {
             'username': username,
             'password': password
         }, function (re) {
-            $('.login-loading').remove()
+            btn.button('reset')
+
             if (re != 'success') {
                 $('.login-tip').text(re)
                 return

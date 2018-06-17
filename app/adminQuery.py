@@ -4,7 +4,7 @@
     :copyright: (c) 2018 by Taffy.
 """
 
-from autoscript import script
+# from autoscript import script
 from db.sql import Database
 import common
 
@@ -16,6 +16,22 @@ def verify_user(username, password):
 
     return False
 
+
+
+
+def analysisURL(url):
+    import requests
+    from readability import Document
+    import json
+
+    html = requests.get(url)
+
+    article = Document(html.text).summary()
+    title = Document(html.text).short_title()
+
+
+    data = {"content": article, "title": title}
+    return json.dumps(data)
 
 
 

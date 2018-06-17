@@ -42,29 +42,35 @@ a, a:focus, a:hover, input, input:focus, button, a:active {
 
 
 
-
 /*post.html*/
 
 .div-url-layout {
     margin-top: 30px; display: flex; align-items: center;
 }
-
 .div-url-layout input {
     margin-right: 10px; flex-grow: 1;
 }
-
 .div-tip {
     min-width: 80px;
 }
-
 .div-title-layout {
     display: flex; align-items: center; margin-top: 20px;
 }
-
+.form-control {
+     max-width: 500px;
+}
 .summary-layout {
     margin-top: 20px; margin-bottom: 100px;
 }
-
 .w-e-text-container {
-    min-height: 700px;
+    min-height: 600px;
+}
+.bottom-post-container {
+    background-color: #ccc; z-index: 10000;
+}
+.bottom-control {
+    margin-bottom:20px; margin-top: 20px; display: flex; justify-content: flex-end;
+}
+.post-btn {
+    margin-left: 20px;
 }
