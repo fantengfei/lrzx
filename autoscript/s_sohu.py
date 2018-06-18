@@ -33,9 +33,8 @@ def insert(url, type):
 
         script.insert_news(news_id, title, u'搜狐新闻', SOURCE_HOST, item['authorName'], 0, authorURL, type, item['images'])
 
-        detail(news_id)
-
-        ids.append(news_id)
+        if detail(news_id) == 1:
+            ids.append(news_id)
 
     print '----------------------- insert souhu type:'+str(type)+' count:' + str(len(list)) + '  -----------------------------'
 

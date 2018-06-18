@@ -75,11 +75,12 @@ def insert(content, type):
         imgs = []
         for img in news['images']:
             imgs.append(img['src'])
-        script.insert_news(news['id'], title, u'美柚', SOURCE_HOST, author, news['review_count'], source_ico, type, imgs)
+        script.insert_news(news['id'], title, u'美柚', SOURCE_HOST, author, 0, source_ico, type, imgs)
 
-        detail(news['id'])
+        if detail(news['id']) == 1:
+            ids.append(news['id'])
 
-        ids.append(news['id'])
+
 
     print '----------------------- insert meiyou type '+str(type)+' count: ' + str(len(list)) + '  -----------------------------'
 
@@ -93,6 +94,7 @@ def detail(id):
         return
 
     content = script.capture('https://news.meiyou.com/news_detail?news_id=' + str(id))
+    content = content.replace('</html>', '')
     if content == "FAIL" or content == None:
         return '内容抓取失败'
 

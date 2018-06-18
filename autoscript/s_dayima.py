@@ -43,10 +43,8 @@ def news():
 
         script.insert_news(news_id, name, source_name, SOURCE_HOST, '', read_count, source_ico, 1, (imgTag['src'],))
 
-        detail(news_id)
-
-        ids.append(news_id)
-
+        if detail(news_id) == 1:
+            ids.append(news_id)
 
     print '----------------------- insert dayima count: ' + str(len(articles)) + '  -----------------------------'
 

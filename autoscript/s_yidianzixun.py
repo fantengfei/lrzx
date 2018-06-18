@@ -72,9 +72,8 @@ def insert(url, type, cookie):
 
         script.insert_news(news_id, title, sourceName, SOURCE_HOST, author, 0, ico, type, imgs, summary)
 
-        detail(news_id)
-
-        ids.append(news_id)
+        if detail(news_id) == 1:
+            ids.append(news_id)
 
     print '--------------insert yidianzixun type:'+str(type)+' count:' + str(len(content['result'])) + '-----------------------------------'
 

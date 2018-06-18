@@ -25,10 +25,11 @@ def analysisURL(url):
     import json
 
     html = requests.get(url)
+    text = html.text
+    text = text.replace('</html>', '')
 
-    article = Document(html.text).summary()
-    title = Document(html.text).short_title()
-
+    article = Document(text).summary()
+    title = Document(text).short_title()
 
     data = {"content": article, "title": title}
     return json.dumps(data)
