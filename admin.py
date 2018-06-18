@@ -46,10 +46,11 @@ def login():
 @admin_api.route('/post', methods=['POST', 'GET'])
 def post():
     if request.method == 'POST':
-        content = request.form['content']
-        title = request.form['title']
+        re = adminQuery.add_news(request.form['title'], request.form['content'], request.form['imgs'], request.form['type'], session['username'])
+        if re != False:
+            return re
 
-        return
+        return 'failure'
 
     return render_template('admin/post.html')
 

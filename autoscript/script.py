@@ -17,6 +17,9 @@ def insert_news(news_id, title, source_name, source_url, author, count, ico, typ
     re = db.execute(sql, par=(news_id, title, source_name, source_url, author, count, ico, type, summary))
 
     for img in imgs:
+        if len(img) < 10:
+            continue
+
         if img.find('https:') != 0 and img.find('http:') != 0:
             img = 'https:' + img
 

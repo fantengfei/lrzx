@@ -31,7 +31,8 @@ class Database(object):
             self.__conn.commit()
             return re
         except:
-            return self.__conn.rollback()
+            self.__conn.rollback()
+            return -1
 
 
 

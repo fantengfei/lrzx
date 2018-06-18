@@ -26,17 +26,47 @@ $(function () {
             btn.button('reset')
         })
     })
+    
+    $('.post-category').click(function () {
+        var id = $(this).attr('id')
+        $('.dropdown-toggle').attr('id', 'menu-' + id)
+        $('.dropdown-toggle b').html($(this).text())
+    })
 
 
     $('.post-btn').click(function () {
+        var id = $('.dropdown-toggle').attr('id')
+        var title = $('#article-title').val()
+        var content = editor.txt.html()
+        var imgs = ""
+
+        $('#editor img').each(function(){
+            imgs = imgs + "," + $(this).attr("src")
+        });
+
+        if (title == undefined || content == undefined || id == undefined) {
+            return
+        }
+
         var btn = $(this).button('loading')
 
-        var title = $('#article-title').val()
-        var conetent = editor.txt.html()
-
         var url = '//' + domain + '/post'
+        $.post(url, {
+            'title': title,
+            'content': content,
+            'imgs': imgs,
+            'type': id.charAt(id.length - 1)
+        }, function (e) {
+            btn.button('reset')
+
+            if (e != 'failure') {
+                location.href = '/detail/' + e
+                return
+            }
+
+            alert('发布失败，请检查内容后再试～')
+        })
 
 
-        btn.button('reset')
     })
 })

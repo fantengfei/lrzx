@@ -48,7 +48,7 @@ a, a:focus, a:hover, input, input:focus, button, a:active {
     margin-top: 30px; display: flex; align-items: center;
 }
 .div-url-layout input {
-    margin-right: 10px; flex-grow: 1;
+    margin-right: 20px; flex-grow: 1;
 }
 .div-tip {
     min-width: 80px;
@@ -73,4 +73,7 @@ a, a:focus, a:hover, input, input:focus, button, a:active {
 }
 .post-btn {
     margin-left: 20px;
+}
+.dropdown-menu li {
+    cursor: pointer;
 }
