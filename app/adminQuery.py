@@ -44,11 +44,8 @@ def add_news(title, content, imgs, type, username):
 
     imgs = imgs.split(',')
     re = script.insert_news(news_id, title, u'丽人资讯', 'www.somenews.cn', user['nickname'], 0, '', int(type), imgs)
-    print re
     if re == 1:
         dre = script.insert_detail(news_id, title, content, user['nickname'], '')
-        print dre
-
         if dre == 1:
             script.appendIDs((news_id, ))
             script.post_tongji()

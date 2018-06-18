@@ -17,11 +17,13 @@ def insert_news(news_id, title, source_name, source_url, author, count, ico, typ
     re = db.execute(sql, par=(news_id, title, source_name, source_url, author, count, ico, type, summary))
 
     for img in imgs:
-        if len(img) < 10:
+        if len(img) < 5:
             continue
 
         if img.find('https:') != 0 and img.find('http:') != 0:
             img = 'https:' + img
+
+        print img
 
         db.execute("""insert ignore into image (news_id, url) values('%s', '%s')""", par=(news_id, img))
     return re
