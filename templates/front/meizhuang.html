@@ -1,6 +1,9 @@
 {%- set page = 'meizhuang' %}
 {%- extends "front/wrapper.html" %}
-{% block body %}
+{%- import 'front/macro.html' as card %}
+{%- block pageinfo %}{{ card.pageinfo('美妆 - 丽人资讯') }}{% endblock %}
+
+{%- block body %}
 
     <div class="container container-wrapper">
         <div class="col-md-7 content-layout" id="news-container">
@@ -10,7 +13,6 @@
         <div class="col-md-1"></div>
 
         <div class="col-md-4">
-            {%- import 'front/macro.html' as card %}
             {{ card.hot_list(hots) }}
         </div>
     </div>

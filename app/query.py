@@ -10,6 +10,8 @@ from db.sql import Database
 import random
 import threading
 import common
+import jieba
+from bs4 import BeautifulSoup
 
 
 
@@ -98,6 +100,21 @@ def detail(id):
 
     if re == None or len(re['content']) < 10:
         return script.error(id)
+
+    soup = BeautifulSoup(re['content']).get_text()
+    text = soup.replace('\n', '')
+    re['description'] = text[0:100]
+
+
+    # 提取关键字
+    seg_list = jieba.cut(re['title'], HMM=False)
+    keywords = []
+    for key in seg_list:
+        if len(key) >= 2:
+            keywords.append(key)
+
+    re['keywords'] = ', '.join(keywords)
+
     return re
 
 

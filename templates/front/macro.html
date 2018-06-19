@@ -165,3 +165,25 @@
     <a href="/health" class="{{ item_prefix }}a-item {% if page == 'health' %} {{ item_prefix }}active {%- endif %}">健康</a>
     <a href="/meizhuang" class="{{ item_prefix }}a-item {% if page == 'meizhuang' %} {{ item_prefix }}active {%- endif %}">美妆</a>
 {%- endmacro -%}
+
+
+{#页面配置#}
+{% macro pageinfo(title='', keyword='', description='') %}
+    {%- if title == '' %}
+        <title>{{ webtitle + ' | 女人的专属-让你的生活更简单' }}</title>
+    {%- else %}
+        <title>{{ title + ' | ' + webtitle + ' - 女人的专属-让你的生活更简单' }}</title>
+    {%- endif %}
+
+    {%- if keyword == '' %}
+        <meta name="keywords" content="{{ webtitle }} 新闻资讯 育儿 备孕 大姨妈 痛经 月经 健康 阅读 女性 生活">
+    {%- else %}
+        <meta name="keywords" content="{{ webtitle }}, {{ keyword }}">
+    {%- endif %}
+
+    {%- if description == '' %}
+        <meta name="description" content="{{ webtitle }}是一款已女性知识为主的内容咨询类网站，它集合了几乎各大女性网站有关女性健康及生活的文章，同时还筛选出各大购物平台中有关女性健康的优质、优惠的生活健康用品，了解女人、了解生活，就来丽人咨询！">
+    {%- else %}
+        <meta name="description" content="{{ description }}">
+    {%- endif %}
+{% endmacro %}
