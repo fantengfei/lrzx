@@ -12,6 +12,7 @@ import threading
 import common
 import jieba
 from bs4 import BeautifulSoup
+import re
 
 
 
@@ -96,26 +97,26 @@ def detail(id):
     thread.start()
 
     db = Database()
-    re = db.query("""select * from detail where news_id = '%s' and status = 1""", (id, ), one=True)
+    data = db.query("""select * from detail where news_id = '%s' and status = 1""", (id, ), one=True)
 
-    if re == None or len(re['content']) < 10:
+    if data == None or len(data['content']) < 10:
         return script.error(id)
 
-    soup = BeautifulSoup(re['content']).get_text()
-    text = soup.replace('\n', '')
-    re['description'] = text[0:100]
+    soup = BeautifulSoup(data['content']).get_text()
+    text = re.sub(r'[\n|\s]', '', soup)
+    data['description'] = text[0:100]
 
 
     # 提取关键字
-    seg_list = jieba.cut(re['title'], HMM=False)
+    seg_list = jieba.cut(data['title'], HMM=False)
     keywords = []
     for key in seg_list:
         if len(key) >= 2:
             keywords.append(key)
 
-    re['keywords'] = ', '.join(keywords)
+    data['keywords'] = ', '.join(keywords)
 
-    return re
+    return data
 
 
 def increase(id):
