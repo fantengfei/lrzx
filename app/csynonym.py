@@ -5,7 +5,9 @@
     :copyright: (c) 2018 by Taffy.
 """
 
-import synonyms
+import jieba
+import jieba.posseg as pseg
+import jieba.analyse
 import re
 
 __CIKU = {}
@@ -13,20 +15,9 @@ __CIKU = {}
 # 分词
 # 返回以逗号分开的名词字符串
 def divide(str):
-    re = synonyms.seg(str)
-    danci = re[0]
-    cixing = re[1]
-
-    keywords = []
-
-    for index in range(len(danci)):
-        if cixing[index].startswith('n') or cixing[index].startswith('v'):
-            if len(danci[index]) > 1:
-                keywords.append(danci[index])
-
-    keywords = list(set(keywords))
-
-    return ','.join(keywords)
+    cixing = ('ns', 'n', 'v', 'vs', 'vn')
+    words = jieba.analyse.extract_tags(str, topK=10, allowPOS=cixing)
+    return ','.join(words)
 
 
 # 重新组合句子
@@ -34,25 +25,14 @@ def recombination(sentence):
     if len(__CIKU) == 0:
         __analysis_ciku()
 
-    re = synonyms.seg(sentence)
-
-    cixing = re[1]
-    danci = re[0]
-
-    filer = [u'x', u'm']
+    re = jieba.lcut(str, cut_all=False)
 
     newStr = ''
 
-    for index in range(len(danci)):
-        newc = danci[index].encode('utf-8')
-        if cixing[index] not in filer:
-            if __CIKU.has_key(newc):
-                newc = __CIKU[newc]
-            # else:
-            #     ncx = synonyms.nearby(newc)
-            #     nc = ncx[0]
-            #     if len(nc) > 1:
-            #         newc = nc[1]
+    for ci in re:
+        newc = ci.encode('utf-8')
+        if __CIKU.has_key(newc):
+            newc = __CIKU[newc]
 
         newStr = newStr + newc
 

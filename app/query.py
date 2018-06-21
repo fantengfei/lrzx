@@ -106,10 +106,7 @@ def detail(id):
     text = re.sub(r'[\n|\s]', '', soup)
     data['description'] = text[0:100]
 
-    print data['title']
-    print csynonym.divide(data['title'])
-
-    data['keywords'] = csynonym.divide(data['title'])
+    data['keywords'] = csynonym.divide(text)
 
     return data
 
@@ -119,7 +116,6 @@ def increase(id):
     sql = """update news set read_count = read_count + 1 where news_id = '%s'"""
     db.execute(sql, (id,))
     del db
-
 
 
 def search(keyword, offset = 0, count = 10, PC = True):
