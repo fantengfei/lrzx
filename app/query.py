@@ -93,11 +93,13 @@ def detail(id):
     if id == None:
         return '参数不能为空'
 
-    thread = threading.Thread(target=increase, name='increase', args=(id,))
-    thread.start()
+    # thread = threading.Thread(target=increase, name='increase', args=(id,))
+    # thread.start()
 
-    db = Database()
+    db = Database('detail')
     data = db.query("""select * from detail where news_id = '%s' and status = 1""", (id, ), one=True)
+    db.execute("""update news set read_count = read_count + 1 where news_id = '%s'""", (id,))
+    del db
 
     if data == None or len(data['content']) < 10:
         return script.error(id)
