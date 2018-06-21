@@ -11,7 +11,6 @@ import random
 import threading
 import common
 import csynonym
-from bs4 import BeautifulSoup
 import re
 
 
@@ -93,21 +92,19 @@ def detail(id):
     if id == None:
         return '参数不能为空'
 
-    # thread = threading.Thread(target=increase, name='increase', args=(id,))
-    # thread.start()
+    thread = threading.Thread(target=increase, name='increase', args=(id,))
+    thread.start()
 
     db = Database('detail')
     data = db.query("""select * from detail where news_id = '%s' and status = 1""", (id, ), one=True)
-    db.execute("""update news set read_count = read_count + 1 where news_id = '%s'""", (id,))
     del db
 
     if data == None or len(data['content']) < 10:
         return script.error(id)
 
-    soup = BeautifulSoup(data['content']).get_text()
-    text = re.sub(r'[\n|\s]', '', soup)
+    p = re.compile('<[^>]+>')
+    text = p.sub("", data['content'])
     data['description'] = text[0:100]
-
     data['keywords'] = csynonym.divide(text)
 
     return data
