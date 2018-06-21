@@ -10,7 +10,7 @@ from db.sql import Database
 import random
 import threading
 import common
-import jieba
+import csynonym
 from bs4 import BeautifulSoup
 import re
 
@@ -106,15 +106,10 @@ def detail(id):
     text = re.sub(r'[\n|\s]', '', soup)
     data['description'] = text[0:100]
 
+    print data['title']
+    print csynonym.divide(data['title'])
 
-    # 提取关键字
-    seg_list = jieba.cut(data['title'], HMM=False)
-    keywords = []
-    for key in seg_list:
-        if len(key) >= 2:
-            keywords.append(key)
-
-    data['keywords'] = ', '.join(keywords)
+    data['keywords'] = csynonym.divide(data['title'])
 
     return data
 

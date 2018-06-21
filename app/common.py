@@ -1,8 +1,10 @@
+#-*- coding:utf-8 -*-
 """
     common
     ~~~~~~
     :copyright: (c) 2018 by Taffy.
 """
+
 
 def md5(str):
     import hashlib
