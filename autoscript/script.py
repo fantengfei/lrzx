@@ -10,11 +10,12 @@ import requests
 from db.sql import Database
 import threading
 import os
+from app.csynonym import recombination
 
 def insert_news(news_id, title, source_name, source_url, author, count, ico, type, imgs, summary = ''):
     db = Database('insert')
     sql = """insert ignore into news (news_id, title, source_name, source_url, author, read_count, source_ico, type, summary) values('%s', '%s', '%s', '%s', '%s', %d, '%s', '%d', '%s')"""
-    re = db.execute(sql, par=(news_id, title, source_name, source_url, author, count, ico, type, summary))
+    re = db.execute(sql, par=(news_id, recombination(title), source_name, source_url, author, count, ico, type, summary))
 
     for img in imgs:
         if len(img) < 5:
@@ -23,8 +24,6 @@ def insert_news(news_id, title, source_name, source_url, author, count, ico, typ
         if img.find('https:') != 0 and img.find('http:') != 0:
             img = 'https:' + img
 
-        print img
-
         db.execute("""insert ignore into image (news_id, url) values('%s', '%s')""", par=(news_id, img))
     return re
 
@@ -32,7 +31,7 @@ def insert_news(news_id, title, source_name, source_url, author, count, ico, typ
 def insert_detail(news_id, title, content, source, publishTime):
     db = Database('detail')
     sql = """insert ignore into detail (news_id, title, content, source, publish_time) values('%s', '%s', '%s', '%s', '%s')"""
-    re = db.execute(sql, par=(news_id, title, content, source, publishTime))
+    re = db.execute(sql, par=(news_id, recombination(title), recombination(content), source, publishTime))
     return re
 
 def capture(url, headers = None):
@@ -66,7 +65,6 @@ def post_tongji():
     urls = {'file': open('urls.txt', 'rb')}
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     r = requests.post('http://data.zz.baidu.com/urls?site=https://www.somenews.cn&token=SBa14K60QlnF0nz5', files=urls, headers=headers)
-    print r.content
 
     os.remove('urls.txt')
 

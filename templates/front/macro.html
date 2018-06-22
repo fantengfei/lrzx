@@ -170,9 +170,9 @@
 {#页面配置#}
 {% macro pageinfo(title='', keyword='', description='') %}
     {%- if title == '' %}
-        <title>{{ webtitle + ' | 女人的专属-让你的生活更简单' }}</title>
+        <title>{{ webtitle + '|女人的专属-让你的生活更简单' }}</title>
     {%- else %}
-        <title>{{ title + ' | ' + webtitle + ' - 女人的专属-让你的生活更简单' }}</title>
+        <title>{{ title + '|' + webtitle + '-女人的专属-让你的生活更简单' }}</title>
     {%- endif %}
 
     {%- if keyword == '' %}

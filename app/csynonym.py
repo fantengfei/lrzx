@@ -6,9 +6,9 @@
 """
 
 import jieba
-import jieba.posseg as pseg
 import jieba.analyse
 import re
+import os
 
 __CIKU = {}
 
@@ -25,23 +25,25 @@ def recombination(sentence):
     if len(__CIKU) == 0:
         __analysis_ciku()
 
-    re = jieba.lcut(str, cut_all=False)
+    data = jieba.lcut(unicode(sentence), cut_all=False)
 
     newStr = ''
 
-    for ci in re:
+    for ci in data:
         newc = ci.encode('utf-8')
         if __CIKU.has_key(newc):
             newc = __CIKU[newc]
 
         newStr = newStr + newc
 
-    return newStr
+    return unicode(newStr, 'utf-8')
 
 
 # 解析词库
 def __analysis_ciku():
-    file = open('synonym.csv', 'rb')
+    current_path = os.path.abspath(__file__)
+    path = os.path.abspath(os.path.dirname(current_path) + os.path.sep + ".")
+    file = open(path + '/synonym.csv', 'rb')
     for line in file:
         ar = line.split(',')
 
