@@ -7,8 +7,6 @@ import json
 
 SOURCE_HOST = 'www.yidianzixun.com'
 
-# https://www.yidianzixun.com/channel/e136117 大姨妈
-
 def news():
     re = None
 

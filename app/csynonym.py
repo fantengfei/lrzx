@@ -16,7 +16,7 @@ __CIKU = {}
 # 返回以逗号分开的名词字符串
 def divide(str):
     cixing = ('ns', 'n', 'v', 'vs', 'vn')
-    words = jieba.analyse.extract_tags(str, topK=10, allowPOS=cixing)
+    words = jieba.analyse.extract_tags(unicode(str), topK=10, allowPOS=cixing)
     return ','.join(words)
 
 
