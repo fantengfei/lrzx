@@ -5,19 +5,21 @@
     :copyright: (c) 2018 by Taffy.
 """
 
-import jieba
-import jieba.analyse
+# import jieba
+# import jieba.analyse
+from yaha import Cuttor
+from yaha.analyse import extract_keywords, summarize1
 import re
 import os
 
 __CIKU = {}
+cuttor = Cuttor()
 
 # 分词
 # 返回以逗号分开的名词字符串
 def divide(str):
-    cixing = ('ns', 'n', 'v', 'vs', 'vn')
-    words = jieba.analyse.extract_tags(unicode(str), topK=10, allowPOS=cixing)
-    return ','.join(words)
+    keys = extract_keywords(unicode(str))
+    return ','.join(keys[0:20])
 
 
 # 重新组合句子
@@ -25,11 +27,11 @@ def recombination(sentence):
     if len(__CIKU) == 0:
         __analysis_ciku()
 
-    data = jieba.lcut(unicode(sentence), cut_all=False)
+    seglist = cuttor.cut(unicode(sentence))
 
     newStr = ''
 
-    for ci in data:
+    for ci in list(seglist):
         newc = ci.encode('utf-8')
         if __CIKU.has_key(newc):
             newc = __CIKU[newc]
