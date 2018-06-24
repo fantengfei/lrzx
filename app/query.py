@@ -104,7 +104,8 @@ def detail(id):
 
     p = re.compile('<[^>]+>')
     text = p.sub("", data['content'])
-    data['description'] = text[0:100]
+    data['description'] = text[0:150]
+    data['description'] = re.sub(u'[\s\r\t\n\d]', '', data['description'])
     data['keywords'] = csynonym.divide(text)
 
     return data
