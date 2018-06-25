@@ -57,7 +57,7 @@ def __analysis_ciku():
 
         if len(ar) >= 2:
             __CIKU[ar[0]] = ar[1]
-            __CIKU[ar[1]] = ar[0]
+            # __CIKU[ar[1]] = ar[0]
 
     file.close()
 
