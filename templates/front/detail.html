@@ -1,7 +1,24 @@
 {%- set page = 'detail' %}
 {%- extends "front/wrapper.html" %}
 {%- import 'front/macro.html' as card %}
-{%- block pageinfo %}{{ card.pageinfo(info.title + ' - ' + info.source, info.keywords, info.description) }}{% endblock %}
+{%- block pageinfo %}
+    {{ card.pageinfo(info.title + ' - ' + info.source, info.keywords, info.description) }}
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+            "@id": "https://www.somenews.cn/detail/{{ info.news_id }}",
+            "appid": "1603573402156360",
+            "title": "{{ info.title }}",
+            "images": [
+                {%- for img in info.imgs  %}
+                    "{{ img }}",
+                {%- endfor %}
+            ],
+            "pubDate": "{{ info.pubDate }}" // 需按照yyyy-mm-ddThh:mm:ss格式编写时间，字母T不能省去
+        }
+    </script>
+{% endblock %}
 
 {%- block body %}
     <div class="news-container container">

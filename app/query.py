@@ -11,8 +11,8 @@ import random
 import threading
 import common
 import csynonym
+import time
 import re
-
 
 
 def newslist(offset = 0, count = 10, type = 1, PC = True):
@@ -107,6 +107,9 @@ def detail(id):
     data['description'] = text[0:150]
     data['description'] = re.sub(u'[\s\r\t\n\d]', '', data['description'])
     data['keywords'] = csynonym.divide(text)
+    data['pubDate'] = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime())
+    imgs = common.analysisImgs(data['content'])
+    data['imgs'] = imgs[0:3]
 
     return data
 
