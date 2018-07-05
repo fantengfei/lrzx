@@ -72,7 +72,6 @@ def post_tongji():
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     requests.post('http://data.zz.baidu.com/urls?site=https://www.somenews.cn&token=SBa14K60QlnF0nz5', files=urls, headers=headers)
     requests.post('http://data.zz.baidu.com/urls?appid=1603573402156360&token=PW9qJfVFt4bl6ek0&type=realtime', files=urls, headers=headers)
-
     os.remove('urls.txt')
 
 
