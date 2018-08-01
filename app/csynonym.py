@@ -24,21 +24,22 @@ def divide(str):
 
 # 重新组合句子
 def recombination(sentence):
-    if len(__CIKU) == 0:
-        __analysis_ciku()
-
-    seglist = cuttor.cut(unicode(sentence))
-
-    newStr = ''
-
-    for ci in list(seglist):
-        newc = ci.encode('utf-8')
-        if __CIKU.has_key(newc):
-            newc = __CIKU[newc]
-
-        newStr = newStr + newc
-
-    return unicode(newStr, 'utf-8')
+    return sentence
+    # if len(__CIKU) == 0:
+    #     __analysis_ciku()
+    #
+    # seglist = cuttor.cut(unicode(sentence))
+    #
+    # newStr = ''
+    #
+    # for ci in list(seglist):
+    #     newc = ci.encode('utf-8')
+    #     if __CIKU.has_key(newc):
+    #         newc = __CIKU[newc]
+    #
+    #     newStr = newStr + newc
+    #
+    # return unicode(newStr, 'utf-8')
 
 
 # 解析词库
