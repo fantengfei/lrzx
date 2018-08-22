@@ -38,8 +38,12 @@ def insert(url, type, cookie):
         'cookie': cookie
     }
 
-    content = script.capture(url, headers)
-    content = json.loads(content)
+    try:
+        content = script.capture(url, headers)
+        content = json.loads(content)
+    except:
+        print url + ": 解析失败"
+        return
 
     if content.has_key('result') == False:
         return
