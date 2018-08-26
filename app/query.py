@@ -10,7 +10,7 @@ from db.sql import Database
 import random
 import threading
 import common
-import csynonym
+# import csynonym
 import time
 import re
 
