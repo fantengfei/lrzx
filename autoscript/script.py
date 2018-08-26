@@ -10,7 +10,7 @@ import requests
 from db.sql import Database
 import threading
 import os
-# from app.csynonym import recombination
+from app.csynonym import recombination
 
 def insert_news(news_id, title, source_name, source_url, author, count, ico, type, imgs, summary = ''):
     db = Database('insert')
