@@ -10,32 +10,28 @@ SOURCE_HOST = 'www.yidianzixun.com'
 def news():
     re = None
 
-    dayima = 'https://www.yidianzixun.com/home/q/news_list_for_channel?channel_id=e136117&cstart=0&cend=10&infinite=true&refresh=1'
-    cookie = 'sptoken=Uo%3B9%3C%3B%3B%3DU%3AU%3B%3AU48261efeced332cc9f20413132c69381055d716a322357935f2644077f81ee1b;'
-    re = insert(dayima, 1, cookie)
+    dayima = 'https://www.yidianzixun.com/home/q/news_list_for_keyword?display=%E6%9C%88%E7%BB%8F%20%E5%A4%A7%E5%A7%A8%E5%A6%88&cstart=0&cend=20&word_type=token&multi=5&appid=web_yidian&_=1535295188731'
+    re = insert(dayima, 1)
 
-    yuer = 'https://www.yidianzixun.com/home/q/news_list_for_channel?channel_id=t1020&cstart=0&cend=10&infinite=true&refresh=1'
-    cookie = 'sptoken=U~%3B%3A8%3AU%3AU%3B%3AU48261efeced332cc9f20413132c69381055d716a322357935f2644077f81ee1b;'
-    re = insert(yuer, 2, cookie)
+    yuer = 'https://www.yidianzixun.com/home/q/news_list_for_keyword?display=%E5%A4%87%E5%AD%95&cstart=0&cend=20&word_type=token&multi=5&appid=web_yidian&_=1535295260779'
+    re = insert(yuer, 2)
 
-    beiyun = 'https://www.yidianzixun.com/home/q/news_list_for_channel?channel_id=u7682&cstart=0&cend=10&infinite=true&refresh=1'
-    cookie = 'sptoken=U%7F%3D%3C28U%3AU%3B%3AU48261efeced332cc9f20413132c69381055d716a322357935f2644077f81ee1b;'
-    re = insert(beiyun, 3, cookie)
+    beiyun = 'https://www.yidianzixun.com/home/q/news_list_for_keyword?display=%E8%82%B2%E5%84%BF&cstart=0&cend=20&word_type=token&multi=5&appid=web_yidian&_=1535295307179'
+    re = insert(beiyun, 3)
 
-    meizhuang = 'https://www.yidianzixun.com/home/q/news_list_for_channel?channel_id=u8867&cstart=0&cend=10&infinite=true&refresh=1'
-    cookie = 'sptoken=U%7F22%3C%3DU%3AU%3B%3AU48261efeced332cc9f20413132c69381055d716a322357935f2644077f81ee1b;'
-    re = insert(meizhuang, 4, cookie)
+    meizhuang = 'https://www.yidianzixun.com/home/q/news_list_for_keyword?display=%E5%81%A5%E5%BA%B7%20%E5%85%BB%E7%94%9F&cstart=0&cend=20&word_type=token&multi=5&appid=web_yidian&_=1535295356090'
+    re = insert(meizhuang, 4)
 
-    jiangkang = 'https://www.yidianzixun.com/home/q/news_list_for_channel?channel_id=11968972663&cstart=0&cend=10&infinite=true&refresh=1'
-    cookie = 'wuid=115726917722451; wuid_createAt=2018-04-23 19:44:9; UM_distinctid=162f2518a1a8d5-09f8a8bac82f9b-33657106-1aeaa0-162f2518a1b17f; JSESSIONID=70631c5e111d0524de72e1c6a87b181612b7de36a0671790909c451ff3ae3f83; DID=f6c4fcaaac844b8dbcff05db50b07db2d3d1310cbda7afe54f7256ee3a024ab9; weather_auth=2; Hm_lvt_15fafbae2b9b11d280c79eff3b840e45=1526186052,1526268689,1526293285,1526293314; CNZZDATA1255169715=895922743-1524481024-https%253A%252F%252Fwww.google.com.hk%252F%7C1526353454; sptoken=U%3B%3B3%3C23%3D8%3C%3C9U%3AU%3B%3AU48261efeced332cc9f20413132c69381055d716a322357935f2644077f81ee1b; Hm_lpvt_15fafbae2b9b11d280c79eff3b840e45=1526357646; captcha=s%3A6e4b5d307629c2f146a68d0e834dd8eb.AXON%2F9VN3VCSQMyEgjdwH4mNZK82PQELeZUJ4IsgEbI; cn_1255169715_dplus=%7B%22distinct_id%22%3A%20%22162f2518a1a8d5-09f8a8bac82f9b-33657106-1aeaa0-162f2518a1b17f%22%2C%22sp%22%3A%20%7B%22%24_sessionid%22%3A%200%2C%22%24_sessionTime%22%3A%201526357651%2C%22%24dp%22%3A%200%2C%22%24_sessionPVTime%22%3A%201526357651%7D%7D'
-    re = insert(jiangkang, 5, cookie)
+    jiangkang = 'https://www.yidianzixun.com/home/q/news_list_for_keyword?display=%E7%BE%8E%E5%A6%86%20%E6%97%B6%E5%B0%9A%20%E5%8C%96%E5%A6%86%20%E7%BE%8E%E5%A5%B3&cstart=0&cend=10&word_type=token&multi=5&appid=web_yidian&_=1535295497638'
+    re = insert(jiangkang, 5)
 
 
 
-def insert(url, type, cookie):
+def insert(url, type, cookie=''):
     headers = {
         'Referer': 'https://www.yidianzixun.com/channel/e136117',
-        'cookie': cookie
+        'cookie': 'JSESSIONID=5b833bbd91a7574bbfed3af92d4b4817966f7198e7c2845b95639ad32dc64e3c;',
+        'content-type':	'application/json; charset=utf-8'
     }
 
     try:
