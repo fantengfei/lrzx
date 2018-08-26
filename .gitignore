@@ -2,3 +2,5 @@
 .idea/
 db/config.py
 *.pyc
+*.out
+*.db
