@@ -184,8 +184,8 @@ def auto_script_helper():
     auto_script()
 
 def capture():
-    s_dayima.news()
-    s_meiyou.news()
+    # s_dayima.news()
+    # s_meiyou.news()
     s_sohu.news()
     s_yidianzixun.news()
     script.post_tongji()
