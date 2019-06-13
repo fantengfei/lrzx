@@ -87,7 +87,6 @@ def __ISPC():
     header = request.headers
     devices = ("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod")
     flag = True
-    print header
     for device in devices:
         if header['User-Agent'].find(device) >= 0:
             flag = False
