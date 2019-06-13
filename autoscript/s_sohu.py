@@ -64,20 +64,18 @@ def detail(id):
     for t in titles:
         title = t
         break
+    
+    author = u'搜狐新闻'
 
     try:
         sourceTag = headerTag.find('div', class_ = 'article-info')
         timeTag = sourceTag.find('span', class_ = 'time')
         authorsTag = sourceTag.find('span', class_ = 'tag').findAll('a')
+        if len(authorsTag) >= 0:
+          author = authorsTag[-1].string
     except:
         pass
     
-    if len(authorsTag) == 0:
-        author = u'搜狐新闻'
-    else:
-        author = authorsTag[-1].string
-
-
     try:
         news_content = info.find('div', class_ = 'article')
         if news_content == None:
