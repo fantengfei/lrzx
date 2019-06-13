@@ -73,7 +73,7 @@ def search(keyword):
 @app.route('/capture')
 def capture():
     query.capture()
-    return '<center><h1>success!!</h1></center>'
+    return 'success'
 
 
 @app.route('/test')
