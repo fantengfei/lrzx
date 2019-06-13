@@ -65,19 +65,27 @@ def detail(id):
         title = t
         break
 
-    sourceTag = headerTag.find('div', class_ = 'article-info')
-    timeTag = sourceTag.find('span', class_ = 'time')
-    authorsTag = sourceTag.find('span', class_ = 'tag').findAll('a')
+    try:
+        sourceTag = headerTag.find('div', class_ = 'article-info')
+        timeTag = sourceTag.find('span', class_ = 'time')
+        authorsTag = sourceTag.find('span', class_ = 'tag').findAll('a')
+    except:
+        pass
+    
     if len(authorsTag) == 0:
         author = u'搜狐新闻'
     else:
         author = authorsTag[-1].string
 
-    news_content = info.find('div', class_ = 'article')
-    if news_content == None:
-        news_content = info.find('article', class_ = 'article')
 
-    news_content.find('span', class_ = 'backword').extract()
-    news_content = unicode(news_content).replace("<br/>", "")
+    try:
+        news_content = info.find('div', class_ = 'article')
+        if news_content == None:
+            news_content = info.find('article', class_ = 'article')
 
-    return script.insert_detail(id, title, news_content, author, timeTag.string)
+        news_content.find('span', class_ = 'backword').extract()
+        news_content = unicode(news_content).replace("<br/>", "")
+
+        return script.insert_detail(id, title, news_content, author, timeTag.string)
+    except:
+        return None

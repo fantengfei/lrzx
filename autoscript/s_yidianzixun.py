@@ -79,23 +79,26 @@ def insert(url, type, cookie=''):
 
 
 def detail(id):
-    content = script.capture('https://www.yidianzixun.com/article/' + id)
-    soup = BeautifulSoup(content)
+    try:
+        content = script.capture('https://www.yidianzixun.com/article/' + id)
+        soup = BeautifulSoup(content)
 
-    wrapperTag = soup.find('div', class_ = 'left-wrapper')
-    if wrapperTag == None:
-        return script.error(id)
+        wrapperTag = soup.find('div', class_ = 'left-wrapper')
+        if wrapperTag == None:
+            return script.error(id)
 
-    titleTag = wrapperTag.h2
-    if titleTag == None:
-        return script.error(id)
+        titleTag = wrapperTag.h2
+        if titleTag == None:
+            return script.error(id)
 
-    metaTag = wrapperTag.find('div', class_ = 'meta')
-    sourceTag = metaTag.a
-    timeTag = metaTag.span
+        metaTag = wrapperTag.find('div', class_ = 'meta')
+        sourceTag = metaTag.a
+        timeTag = metaTag.span
 
-    detail = wrapperTag.find('div', class_ = 'content-bd')
-    if detail == None:
-        detail = wrapperTag.find('div', class_ = 'video-wrapper')
+        detail = wrapperTag.find('div', class_ = 'content-bd')
+        if detail == None:
+            detail = wrapperTag.find('div', class_ = 'video-wrapper')
 
-    return script.insert_detail(id, titleTag.string, detail, sourceTag.string, timeTag.string)
+        return script.insert_detail(id, titleTag.string, detail, sourceTag.string, timeTag.string)
+    except:
+        return None
