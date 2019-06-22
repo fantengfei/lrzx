@@ -70,9 +70,10 @@ def post_tongji():
 
     urls = {'file': open('urls.txt', 'rb')}
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-    requests.post('http://data.zz.baidu.com/urls?site=https://www.somenews.cn&token=SBa14K60QlnF0nz5', files=urls, headers=headers)
-    # requests.post('http://data.zz.baidu.com/urls?appid=1603573402156360&token=PW9qJfVFt4bl6ek0&type=realtime', files=urls, headers=headers)
-    # 'http://data.zz.baidu.com/urls?appid=1603573402156360&token=PW9qJfVFt4bl6ek0&type=realtime'
+    re = requests.post('http://data.zz.baidu.com/urls?site=https://www.somenews.cn&token=SBa14K60QlnF0nz5', files=urls, headers=headers)
+    print re
+    sre = requests.post('http://data.zz.baidu.com/urls?appid=1603573402156360&token=PW9qJfVFt4bl6ek0&type=realtime', files=urls, headers=headers)
+    print sre
     os.remove('urls.txt')
 
 
