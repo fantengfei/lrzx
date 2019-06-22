@@ -79,7 +79,9 @@ def post_tongji():
 def appendIDs(ids=[]):
     with open('urls.txt', 'a') as f:
         for id in ids:
-            f.write(__generateURL(id))
+            url = __generateURL(id)
+            print url
+            f.write(url)
 
 
 def __generateURL(id):
