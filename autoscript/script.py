@@ -67,7 +67,6 @@ def delete(news_id):
 
 def post_tongji():
     import requests
-
     urls = {'file': open('urls.txt', 'rb')}
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     re = requests.post('http://data.zz.baidu.com/urls?site=https://www.somenews.cn&token=SBa14K60QlnF0nz5', files=urls, headers=headers)
@@ -78,15 +77,9 @@ def post_tongji():
 
 
 def appendIDs(ids=[]):
-    path = 'urls.txt'
-    if os.path.exists(path) == False:
-        file = open(path, 'w')
-    else:
-        file = open(path, 'a')
-
-    for id in ids:
-        file.write(__generateURL(id))
-    file.close()
+    with open('urls.txt', 'a') as f:
+        for id in ids:
+            f.write(__generateURL(id))
 
 
 def __generateURL(id):
