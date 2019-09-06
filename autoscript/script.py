@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 """
     autoscript
     脚本的基础方法
@@ -12,9 +12,11 @@ import threading
 import os
 from app.csynonym import recombination
 
-def insert_news(news_id, title, source_name, source_url, author, count, ico, type, imgs, summary = ''):
+
+def insert_news(news_id, title, source_name, source_url, author, count, ico, type, imgs, summary=''):
     db = Database('insert')
-    sql = """insert ignore into news (news_id, title, source_name, source_url, author, read_count, source_ico, type, summary) values('%s', '%s', '%s', '%s', '%s', %d, '%s', '%d', '%s')"""
+    sql = """insert ignore into news (news_id, title, source_name, source_url, author, read_count, source_ico, type, 
+    summary) values('%s', '%s', '%s', '%s', '%s', %d, '%s', '%d', '%s') """
     re_title = recombination(title)
     title = re_title if len(re_title) > 0 else title
     re = db.execute(sql, par=(news_id, title, source_name, source_url, author, count, ico, type, summary))
@@ -32,7 +34,8 @@ def insert_news(news_id, title, source_name, source_url, author, count, ico, typ
 
 def insert_detail(news_id, title, content, source, publishTime):
     db = Database('detail')
-    sql = """insert ignore into detail (news_id, title, content, source, publish_time) values('%s', '%s', '%s', '%s', '%s')"""
+    sql = """insert ignore into detail (news_id, title, content, source, publish_time) values('%s', '%s', '%s', '%s', 
+    '%s') """
     re_title = recombination(title)
     re_content = recombination(content)
     title = re_title if len(re_title) > 0 else title
@@ -40,8 +43,9 @@ def insert_detail(news_id, title, content, source, publishTime):
     re = db.execute(sql, par=(news_id, title, content, source, publishTime))
     return re
 
-def capture(url, headers = None):
-    if url == None:
+
+def capture(url, headers=None):
+    if url is None:
         return None
 
     re = requests.get(url, params=None, headers=headers)
@@ -50,7 +54,7 @@ def capture(url, headers = None):
 
 def error(news_id=None):
     info = {'title': '', 'publish_time': '', 'source': '', 'content': u'<center>出错了！文章可能被下架了哦~</center>'}
-    if news_id == None:
+    if news_id is None:
         return info
     thread = threading.Thread(target=delete, name='error', args=(news_id,))
     thread.start()
@@ -64,15 +68,13 @@ def delete(news_id):
     del db
 
 
-
 def post_tongji():
     import requests
     urls = {'file': open('urls.txt', 'rb')}
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-    re = requests.post('http://data.zz.baidu.com/urls?site=https://www.somenews.cn&token=SBa14K60QlnF0nz5', files=urls, headers=headers)
+    re = requests.post('http://data.zz.baidu.com/urls?site=lrzx.somenews.cn&token=SBa14K60QlnF0nz5', files=urls,
+                       headers=headers)
     print re
-    sre = requests.post('http://data.zz.baidu.com/urls?appid=1603573402156360&token=PW9qJfVFt4bl6ek0&type=realtime', files=urls, headers=headers)
-    print sre
     os.remove('urls.txt')
 
 
@@ -85,4 +87,4 @@ def appendIDs(ids=[]):
 
 
 def __generateURL(id):
-    return 'https://www.somenews.cn/detail/' + str(id) + '\n'
+    return 'https://lrzx.somenews.cn/detail/' + str(id) + '\n'

@@ -43,7 +43,7 @@ def add_news(title, content, imgs, type, username):
     del db
 
     imgs = imgs.split(',')
-    re = script.insert_news(news_id, title, u'丽人资讯', 'www.somenews.cn', user['nickname'], 0, '', int(type), imgs)
+    re = script.insert_news(news_id, title, u'丽人资讯', 'lrzx.somenews.cn', user['nickname'], 0, '', int(type), imgs)
     if re == 1:
         dre = script.insert_detail(news_id, title, content, user['nickname'], '')
         if dre == 1:
