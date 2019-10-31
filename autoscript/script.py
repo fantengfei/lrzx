@@ -87,4 +87,4 @@ def appendIDs(ids=[]):
 
 
 def __generateURL(id):
-    return 'https://lrzx.somenews.cn/detail/' + str(id) + '\n'
+    return 'http://lrzx.somenews.cn/detail/' + str(id) + '\n'
