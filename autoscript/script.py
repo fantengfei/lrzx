@@ -72,7 +72,7 @@ def post_tongji():
     import requests
     urls = {'file': open('urls.txt', 'rb')}
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-    re = requests.post('http://data.zz.baidu.com/urls?site=lrzx.somenews.cn&token=SBa14K60QlnF0nz5', files=urls,
+    re = requests.post('http://data.zz.baidu.com/urls?site=https://www.somenews.cn&token=SBa14K60QlnF0nz5', files=urls,
                        headers=headers)
     print re
     os.remove('urls.txt')
@@ -87,4 +87,4 @@ def appendIDs(ids=[]):
 
 
 def __generateURL(id):
-    return 'http://lrzx.somenews.cn/detail/' + str(id) + '\n'
+    return 'https://www.somenews.cn/detail/' + str(id) + '\n'
