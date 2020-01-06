@@ -20,7 +20,7 @@ app.register_blueprint(admin_api)
 @app.route('/')
 @app.route('/home')
 def index():
-    return "<center><h1>丽人资讯</h1></center>"
+    return "<center><h1>维护中...</h1></center>"
     # return render_template('front/index.html', list=query.newslist(type = 6, PC = __ISPC()), hots=query.hotList(type=6), banners=query.banner())
 
 @app.route('/dayima')
