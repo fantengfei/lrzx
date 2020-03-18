@@ -1,10 +1,11 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 
 from bs4 import BeautifulSoup
 import script
 
 SOURCE_HOST = 'http://www.dayima.com'
+
 
 # http://www.dayima.com/articles
 # http://www.dayima.com/articles/article/1011
@@ -14,17 +15,16 @@ def news():
     url = 'http://www.dayima.com/articles'
     content = script.capture(url)
 
-    if content == "FAIL" or content == None:
+    if content is "FAIL" or content is None:
         return 'invalid path'
 
     soup = BeautifulSoup(content)
-    articles = soup.findAll('div', class_ = 'dotted')
+    articles = soup.findAll('div', class_='dotted')
 
     ids = []
 
-
     for article in articles:
-        title = article.find('div', class_ = 'title')
+        title = article.find('div', class_='title')
         aTag = title.a
 
         url = aTag.get('href')
@@ -33,8 +33,7 @@ def news():
         query = url.split('/')
         news_id = query[-1]
 
-
-        pic = article.find('div', class_ = 'picArea')
+        pic = article.find('div', class_='picArea')
         imgTag = pic.img
 
         read_count = 0
@@ -58,22 +57,21 @@ def detail(id):
 
     content = script.capture('http://www.dayima.com/articles/article/' + id)
 
-    if content == "FAIL" or content == None:
+    if content == "FAIL" or content is None:
         return '内容抓取失败'
 
     soup = BeautifulSoup(content)
-    info = soup.find('div', class_ = 'leftArea')
+    info = soup.find('div', class_='leftArea')
     if info == None:
         return script.error(id)
 
-    titleTag = info.find('div', class_ = 'artilce_title')
-    newsContent = info.find('div', class_ = 'article_content')
+    titleTag = info.find('div', class_='artilce_title')
+    newsContent = info.find('div', class_='article_content')
     newsContent = unicode(newsContent).replace("<br/>", "  ")
-    bref = unicode(info.find('div', class_ = 'article_brief')).replace("<br/>", " ")
+    bref = unicode(info.find('div', class_='article_brief')).replace("<br/>", " ")
 
     title = titleTag.string
-    time = info.find('span', class_ = 'artilce_time')
+    time = info.find('span', class_='artilce_time')
     sources = u'大姨妈'
 
     return script.insert_detail(id, title, bref + newsContent, sources, time.string)
-

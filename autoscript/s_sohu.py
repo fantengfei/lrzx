@@ -1,10 +1,11 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 from bs4 import BeautifulSoup
 import json
 import script
 
 SOURCE_HOST = 'news.sohu.com'
+
 
 def news():
     # 'http://v2.sohu.com/public-api/feed?scene=CHANNEL&sceneId=26&page=1&size=1000' 育儿
@@ -26,7 +27,7 @@ def insert(url, type):
         title = item['title'].replace("\n", "")
         title = title.strip()
         authorURL = ''
-        if item['authorPic'] != None and len(item['authorPic']) > 10:
+        if item['authorPic'] is not None and len(item['authorPic']) > 10:
             authorURL = 'https:' + item['authorPic']
 
         news_id = str(item['id']) + '_' + str(item['authorId'])
@@ -36,52 +37,52 @@ def insert(url, type):
         if detail(news_id) == 1:
             ids.append(news_id)
 
-    print '----------------------- insert souhu type:'+str(type)+' count:' + str(len(list)) + '  -----------------------------'
+    print '----------------------- insert souhu type:' + str(type) + ' count:' + str(
+        len(list)) + '  -----------------------------'
 
     script.appendIDs(ids)
 
 
-
 def detail(id):
-    if id == None:
+    if id is None:
         print 'url 不能为 nil'
         return
 
     content = script.capture('http://www.sohu.com/a/' + str(id))
-    if content == "FAIL" or content == None:
+    if content == "FAIL" or content is None:
         print '内容抓取失败'
         return
 
     soup = BeautifulSoup(content)
-    info = soup.find('div', class_ = 'text')
+    info = soup.find('div', class_='text')
 
-    if info == None:
+    if info is None:
         return script.error(id)
 
-    headerTag = info.find('div', class_ = 'text-title')
+    headerTag = info.find('div', class_='text-title')
 
     titles = headerTag.find('h1').stripped_strings
     for t in titles:
         title = t
         break
-    
+
     author = u'搜狐新闻'
 
     try:
-        sourceTag = headerTag.find('div', class_ = 'article-info')
-        timeTag = sourceTag.find('span', class_ = 'time')
-        authorsTag = sourceTag.find('span', class_ = 'tag').findAll('a')
+        sourceTag = headerTag.find('div', class_='article-info')
+        timeTag = sourceTag.find('span', class_='time')
+        authorsTag = sourceTag.find('span', class_='tag').findAll('a')
         if len(authorsTag) >= 0:
-          author = authorsTag[-1].string
+            author = authorsTag[-1].string
     except:
         pass
-    
-    try:
-        news_content = info.find('div', class_ = 'article')
-        if news_content == None:
-            news_content = info.find('article', class_ = 'article')
 
-        news_content.find('span', class_ = 'backword').extract()
+    try:
+        news_content = info.find('div', class_='article')
+        if news_content is None:
+            news_content = info.find('article', class_='article')
+
+        news_content.find('span', class_='backword').extract()
         news_content = unicode(news_content).replace("<br/>", "")
 
         return script.insert_detail(id, title, news_content, author, timeTag.string)

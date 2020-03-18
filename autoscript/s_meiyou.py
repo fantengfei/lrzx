@@ -89,13 +89,13 @@ def insert(content, type):
 
 
 def detail(id):
-    if id == None:
+    if id is None:
         print 'url 不能为 nil'
         return
 
     content = script.capture('https://news.meiyou.com/news_detail?news_id=' + str(id))
     content = content.replace('</html>', '')
-    if content == "FAIL" or content == None:
+    if content == "FAIL" or content is None:
         return '内容抓取失败'
 
     soup = BeautifulSoup(content)
